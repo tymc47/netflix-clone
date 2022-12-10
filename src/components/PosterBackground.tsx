@@ -27,9 +27,9 @@ export const BgMask = styled.div`
   background: rgba(0, 0, 0, 0.4);
   background-image: linear-gradient(
     0deg,
-    rgba(0, 0, 0, 0.8) 0,
+    rgba(0, 0, 0, 0.7) 0,
     transparent 60%,
-    rgba(0, 0, 0, 0.8)
+    rgba(0, 0, 0, 0.7)
   );
   position: absolute;
   top: 0;
