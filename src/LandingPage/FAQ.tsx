@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { ReactComponent as Cross } from "../assets/x.svg";
+import { ReactComponent as Cross_icon } from "../assets/x.svg";
 import QandA from "./questions";
 
 const FAQList = styled.ul`
@@ -51,7 +51,7 @@ const FAQList = styled.ul`
   }
 `;
 
-const ListX = styled(Cross)`
+const ListX = styled(Cross_icon)`
   fill: white;
   position: absolute;
   right: 1em;
