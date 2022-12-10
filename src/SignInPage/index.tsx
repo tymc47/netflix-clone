@@ -1,4 +1,4 @@
-import NavBar from "../components/NavBar";
+import { NavBar } from "../components/NavBar";
 import { RedButton } from "../LandingPage/FrontPage.styled";
 import { useState } from "react";
 import PosterBackground from "../components/PosterBackground";
@@ -17,7 +17,7 @@ const SignInPage = () => {
   const usernameValidator = (input: string) => {
     if (!input) throw new Error("Please enter a valid email or phone number");
     else if (!validateEmail(input))
-      throw new Error("Please enter a valid email");
+      throw new Error("Please enter a valid email.");
   };
 
   const passwordValidator = (input: string) => {
@@ -38,8 +38,13 @@ const SignInPage = () => {
             <TextField
               label={"Email or phone number"}
               validator={usernameValidator}
+              mode={"signin"}
             />
-            <TextField label={"Password"} validator={passwordValidator} />
+            <TextField
+              label={"Password"}
+              validator={passwordValidator}
+              mode={"password"}
+            />
 
             <RedButton>Sign In</RedButton>
             <div className="login-help">

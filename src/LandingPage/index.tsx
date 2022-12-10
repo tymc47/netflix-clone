@@ -22,7 +22,7 @@ import {
   CardImgContainer,
   SignIn,
 } from "./FrontPage.styled";
-import NavBar from "../components/NavBar";
+import { NavBar } from "../components/NavBar";
 import PosterBackground from "../components/PosterBackground";
 import TextField from "../components/TextField";
 import { validateEmail } from "../utils";
