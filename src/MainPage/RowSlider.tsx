@@ -5,11 +5,7 @@ import { Movie } from "../types";
 import SliderCard from "./SliderCard";
 import { ReactComponent as Left_icon } from "../assets/left.svg";
 import { ReactComponent as Right_icon } from "../assets/right.svg";
-import { rotateMovieArray } from "../utils";
-
-interface SliderProps {
-  translationX: string;
-}
+import { useSlider } from "../hooks";
 
 const RowContainer = styled.div`
   position: relative;
@@ -32,16 +28,22 @@ const Slider = styled.div`
   padding: 0 4vw;
   white-space: nowrap;
 
+  &:hover div.slider-control {
+    opacity: 1;
+  }
+
   div.slider-control {
     position: absolute;
     height: 100%;
-    width: 3.5vw;
+    width: calc(4vw - 5px);
     display: flex;
     align-items: center;
     justify-content: center;
     background: hsla(0, 0%, 8%, 0.5);
     z-index: 20;
     border-radius: 4px;
+    opacity: 0;
+    cursor: pointer;
 
     &:hover svg {
       transform: scale(2);
@@ -63,49 +65,50 @@ const Slider = styled.div`
   }
 `;
 
-const SliderContent = styled.div`
-  transition: transform 0.5s;
-`;
+const SliderContent = styled.div``;
 
 const RowSlider = () => {
+  const DISPLAY_COUNT = 7;
+
   const [content, setContent] = useState<Movie[]>([]);
-  const [display, setDisplay] = useState<Movie[]>([]);
-  const [translation, setTranslation] = useState({});
-  const [isMoved, setIsMoved] = useState<boolean>(false);
-  const NO_OF_MOVIE = 14;
+  const {
+    containerRef,
+    displayItems,
+    itemWidth,
+    handleLeftClick,
+    handleRightClick,
+    sliderProps,
+    isMoved,
+  } = useSlider(content, DISPLAY_COUNT);
 
   useEffect(() => {
     getTrending().then((data) => {
       setContent(data);
-      setDisplay(data);
     });
   }, []);
 
-  const handleRightClick = () => {
-    setIsMoved(true);
-
-    const rotated = rotateMovieArray(7, "left", display);
-
-    setDisplay(rotated);
-    setTranslation({ transform: "translateX(-40%)" });
-    setTranslation({});
-  };
-
-  console.log(content);
-  console.log(display);
+  console.log(itemWidth);
+  console.log(sliderProps.style);
+  console.log(displayItems);
   return (
     <RowContainer>
       <div className="row-header">
         <h2>Trending Now</h2>
       </div>
       <Slider>
-        <div className="slider-control left">
-          <Left_icon />
-        </div>
-        <SliderContent style={translation}>
-          {display.length !== 0
-            ? display.map((movie: Movie) => (
-                <SliderCard key={movie.id} movie={movie} />
+        {isMoved ? (
+          <div className="slider-control left" onClick={handleLeftClick}>
+            <Left_icon />
+          </div>
+        ) : null}
+        <SliderContent ref={containerRef} {...sliderProps}>
+          {displayItems.length !== 0
+            ? displayItems.map((movie: Movie) => (
+                <SliderCard
+                  key={movie.id}
+                  movie={movie}
+                  itemWidth={itemWidth}
+                />
               ))
             : null}
         </SliderContent>
