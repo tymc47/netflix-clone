@@ -52,7 +52,12 @@ export const getTrending = async () => {
     `${BASE_URL}/movie/popular?api_key=${API_KEY}&language=en-US&page=1`
   );
 
-  if (response.status === 200) return response.data.results;
+  const response2 = await axios.get(
+    `${BASE_URL}/movie/popular?api_key=${API_KEY}&language=en-US&page=2`
+  );
+
+  if (response.status === 200 && response2.status === 200)
+    return response.data.results.concat(response2.data.results);
 
   return;
 };
