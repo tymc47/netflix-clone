@@ -6,16 +6,23 @@ const SliderCardContainer = styled.div`
   display: inline-block;
   border-radius: 4px;
   overflow: hidden;
+
   margin: 0 5px;
   img {
-    width: 12.3vw;
+    width: ${({ itemWidth }: { itemWidth: number }) => `${itemWidth - 10}px`};
     object-fit: contain;
   }
 `;
 
-const SliderCard = ({ movie }: { movie: Movie }) => {
+const SliderCard = ({
+  movie,
+  itemWidth,
+}: {
+  movie: Movie;
+  itemWidth: number;
+}) => {
   return (
-    <SliderCardContainer>
+    <SliderCardContainer itemWidth={itemWidth}>
       <img key={movie.id} src={`${imageUrl}/w500${movie.poster_path}`} />
     </SliderCardContainer>
   );

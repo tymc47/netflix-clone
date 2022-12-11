@@ -75,7 +75,7 @@ const LogoAndTextContainer = styled.div`
 
   div.empty-logo {
     width: 100%;
-    height: 30vh;
+    height: 20vh;
   }
 
   div.overview {
