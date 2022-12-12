@@ -117,8 +117,6 @@ const LogoAndTextContainer = styled.div`
 `;
 
 const Billboard = ({ billboardMovie }: { billboardMovie: Movie | null }) => {
-  console.log(billboardMovie);
-  console.log(billboardMovie?.logo?.file_path);
   return (
     <BillboardContainer>
       <BillboardMain>
