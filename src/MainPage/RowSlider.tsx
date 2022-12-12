@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { getTrending } from "../services/TMDB";
-import { Movie } from "../types";
+import { getShowsByFilter } from "../services/TMDB";
+import { Movie, SliderFilter, Tab } from "../types";
 import SliderCard from "./SliderCard";
 import { ReactComponent as Left_icon } from "../assets/left.svg";
 import { ReactComponent as Right_icon } from "../assets/right.svg";
 import { useSlider } from "../hooks";
+import { shuffleShowArray } from "../utils";
 
 const RowContainer = styled.div`
   position: relative;
@@ -13,11 +14,13 @@ const RowContainer = styled.div`
   box-sizing: border-box;
   z-index: 8;
   overflow: hidden;
+  padding-bottom: 1rem;
 
   div.row-header {
-    margin: 0 4vw 0.5rem;
+    margin: 0.5rem 4vw 0.5rem;
     h2 {
       line-height: 1.3;
+      margin: 0;
     }
   }
 `;
@@ -67,7 +70,7 @@ const Slider = styled.div`
 
 const SliderContent = styled.div``;
 
-const RowSlider = () => {
+const RowSlider = ({ filter, tab }: { filter: SliderFilter; tab: Tab }) => {
   const DISPLAY_COUNT = 7;
 
   const [content, setContent] = useState<Movie[]>([]);
@@ -82,18 +85,15 @@ const RowSlider = () => {
   } = useSlider(content, DISPLAY_COUNT);
 
   useEffect(() => {
-    getTrending().then((data) => {
-      setContent(data);
+    getShowsByFilter(filter, tab).then((data) => {
+      if (data) setContent(shuffleShowArray(data));
     });
-  }, []);
+  }, [filter, tab]);
 
-  console.log(itemWidth);
-  console.log(sliderProps.style);
-  console.log(displayItems);
   return (
     <RowContainer>
       <div className="row-header">
-        <h2>Trending Now</h2>
+        <h2>{filter.filter}</h2>
       </div>
       <Slider>
         {isMoved ? (
@@ -105,7 +105,7 @@ const RowSlider = () => {
           {displayItems.length !== 0
             ? displayItems.map((movie: Movie) => (
                 <SliderCard
-                  key={movie.id}
+                  key={`${filter.filter}${movie.id}`}
                   movie={movie}
                   itemWidth={itemWidth}
                 />

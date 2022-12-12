@@ -23,7 +23,11 @@ const SliderCard = ({
 }) => {
   return (
     <SliderCardContainer itemWidth={itemWidth}>
-      <img key={movie.id} src={`${imageUrl}/w500${movie.poster_path}`} />
+      <img
+        key={movie.id}
+        src={`${imageUrl}/w500${movie.poster_path}`}
+        alt={movie.title}
+      />
     </SliderCardContainer>
   );
 };
