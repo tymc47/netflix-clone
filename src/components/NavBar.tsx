@@ -95,7 +95,7 @@ export const NavBar_Main = ({ scrolled }: { scrolled: boolean }) => {
         <Link to="/browse">Home</Link>
         <Link to="/browse/tvshows">TV Shows</Link>
         <Link to="/browse/movies">Movies</Link>
-        <Link to="/browse/mylists">My List</Link>
+        <Link to="/browse/mylist">My List</Link>
       </div>
       <div>
         <Search_icon {...iconStyles} />
