@@ -19,7 +19,10 @@ function App() {
       <Routes>
         <Route path="/" element={<FrontPage />} />
         <Route path="/login" element={<SignInPage />} />
-        <Route path="/browse" element={<MainPage />} />
+        <Route path="/browse/tvshows" element={<MainPage tab={"tv"} />} />
+        <Route path="/browse/movies" element={<MainPage tab={"movie"} />} />
+        <Route path="/browse/mylist" element={<>Hello World</>} />
+        <Route path="/browse/" element={<MainPage tab={"home"} />} />
       </Routes>
     </AppMount>
   );
