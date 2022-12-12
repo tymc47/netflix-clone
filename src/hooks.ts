@@ -41,6 +41,7 @@ export const useSlider = (items: Movie[], displayCount: number) => {
   useEffect(() => {
     setAllItems(items);
     setDisplayItems(items.slice(0, displayCount * 3 + 2));
+    setAnimationStyle({ transform: `translateX(0px)` });
   }, [items]);
 
   const handleLeftClick = () => {
