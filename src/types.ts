@@ -27,3 +27,22 @@ export interface Video {
   published_at: string;
   id: string;
 }
+
+export type Filter =
+  | "Trending Now"
+  | "Action & Adventure"
+  | "Comedy"
+  | "US Dramas"
+  | "Anime"
+  | "Documentary"
+  | "Sci-Fi"
+  | "For Kids";
+
+export interface SliderFilter {
+  filter: Filter;
+  movieUrl?: string;
+  tvUrl?: string;
+  type?: string;
+}
+
+export type Tab = "home" | "tv" | "movie";
