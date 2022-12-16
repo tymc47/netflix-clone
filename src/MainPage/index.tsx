@@ -1,16 +1,25 @@
 import { useEffect, useState } from "react";
 import { NavBar_Main } from "../components/NavBar";
-import { getShowForBillboard, sliderOptions } from "../services/TMDB";
-import { Movie, SliderFilter, Tab } from "../types";
+import tmdbService from "../services/tmdbService";
+import { Show, SliderFilter, Tab } from "../types";
 import { MainPageContainer, SliderContainer } from "./Mainpage.styled";
 import Billboard from "./Billboard";
 import RowSlider from "./RowSlider";
-import { rearrangeSliders } from "../utils";
+import { rearrangeSliders, signOut } from "../utils";
+import { useNavigate } from "react-router-dom";
+import { removeUser, useStateValue } from "../state";
+import MyList from "./MyList";
 
-const MainPage = ({ tab }: { tab: Tab }) => {
-  const [billboard, setBillboard] = useState<Movie | null>(null);
+interface MainPageProps {
+  tab: Tab;
+}
+
+const MainPage = ({ tab }: MainPageProps) => {
+  const [, dispatch] = useStateValue();
+  const [billboard, setBillboard] = useState<Show | null>(null);
   const [sliders, setSliders] = useState<SliderFilter[]>([]);
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
@@ -19,24 +28,37 @@ const MainPage = ({ tab }: { tab: Tab }) => {
   });
 
   useEffect(() => {
-    console.log("changing tab");
-    getShowForBillboard(tab).then((data: Movie) => setBillboard(data));
-    const shuffledOptions = rearrangeSliders(sliderOptions);
+    console.log("changing tab to", tab);
+    tmdbService
+      .getShowForBillboard(tab)
+      .then((data: Show | null) => setBillboard(data));
+    const shuffledOptions = rearrangeSliders(tmdbService.sliderOptions);
     setSliders(shuffledOptions);
     window.scrollTo(0, 0);
   }, [tab]);
 
+  const handleLogout = () => {
+    dispatch(removeUser());
+    signOut();
+    navigate("/");
+  };
   return (
     <MainPageContainer>
-      <NavBar_Main scrolled={isScrolled} />
-      <Billboard billboardMovie={billboard} />
-      <SliderContainer>
-        {sliders.length !== 0
-          ? sliders.map((slider: SliderFilter, index) => (
-              <RowSlider key={index} filter={slider} tab={tab} />
-            ))
-          : null}
-      </SliderContainer>
+      <NavBar_Main scrolled={isScrolled} handleLogout={handleLogout} />
+      {tab !== "mylist" ? (
+        <>
+          <Billboard billboardMovie={billboard} />
+          <SliderContainer>
+            {sliders.length !== 0
+              ? sliders.map((slider: SliderFilter, index) => (
+                  <RowSlider key={index} filter={slider} tab={tab} />
+                ))
+              : null}
+          </SliderContainer>
+        </>
+      ) : (
+        <MyList />
+      )}
     </MainPageContainer>
   );
 };
