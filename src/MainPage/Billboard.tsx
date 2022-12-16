@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Movie } from "../types";
+import { Show } from "../types";
 const imageUrl = process.env.REACT_APP_IMG_URL;
 import backgroundImage from "../assets/netflixHKbg.jpeg";
 import { ReactComponent as Play_icon } from "../assets/play.svg";
@@ -19,7 +19,7 @@ export const BillboardMain = styled.div`
   img.backdrop {
     width: 100vw;
     object-fit: cover;
-    z-index: 1;
+    z-index: -3;
   }
 `;
 
@@ -54,7 +54,7 @@ export const BottomMask = styled.div`
   opacity: 1;
   top: auto;
   bottom: -1px;
-  z-index: 2;
+  z-index: 0;
 `;
 
 const LogoAndTextContainer = styled.div`
@@ -116,7 +116,7 @@ const LogoAndTextContainer = styled.div`
   }
 `;
 
-const Billboard = ({ billboardMovie }: { billboardMovie: Movie | null }) => {
+const Billboard = ({ billboardMovie }: { billboardMovie: Show | null }) => {
   return (
     <BillboardContainer>
       <BillboardMain>
