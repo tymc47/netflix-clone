@@ -25,10 +25,6 @@ const InputContainer = styled.div`
     background-color: #333;
   }
 
-  input.error {
-    border-bottom: 2px #e87c03 solid;
-  }
-
   label {
     position: absolute;
     pointer-events: none;
@@ -41,14 +37,6 @@ const InputContainer = styled.div`
     left: 16px;
   }
 
-  div.error {
-    margin-top: 0.4rem;
-    font-size: 0.9rem;
-    color: #e87c03;
-    text-align: left;
-    width: 100%;
-  }
-
   &:focus-within label {
     transform: translate(0, 12px) scale(0.8);
   }
@@ -57,8 +45,7 @@ const InputContainer = styled.div`
     transform: translate(0, 12px) scale(0.8);
   }
 
-  &.signin,
-  &.password {
+  &.signin {
     padding-bottom: 16px;
 
     input {
@@ -103,30 +90,87 @@ const InputContainer = styled.div`
       display: block;
     }
   }
+
+  &.signup,
+  &.landing {
+    padding-bottom: 16px;
+
+    input {
+      border: 1px solid #8c8c8c;
+
+      &:focus {
+        border-color: #0071eb;
+      }
+    }
+
+    input.error {
+      border-color: #b92d2b;
+    }
+
+    input.success {
+      border-color: #5fa53f;
+    }
+
+    div.error {
+      margin-top: 0.4rem;
+      font-size: 0.8rem;
+      color: #b92d2b;
+      text-align: left;
+      width: 100%;
+    }
+
+    button.show-password {
+      position: absolute;
+      border: none;
+      font-size: 14px;
+      background: transparent;
+      color: rgb(140, 140, 140);
+      top: 22px;
+      right: 10px;
+      display: none;
+    }
+
+    &:focus-within button.show-password {
+      display: block;
+    }
+  }
+
+  &.landing {
+    input.error {
+      border: none;
+      border-bottom: 2px solid #e87c03;
+    }
+    div.error {
+      margin-top: 0.4rem;
+      font-size: 1rem;
+      color: #e87c03;
+      text-align: left;
+      width: 100%;
+    }
+  }
 `;
 
-interface TextFieldProps {
+export type TextFieldMode = "signin" | "signup" | "landing";
+export type TextFieldType = "account" | "password";
+
+export interface TextFieldProps {
   label: string;
-  validator: (input: string) => void;
-  mode?: "signin" | "landingpage" | "signup" | "password";
+  mode: TextFieldMode;
+  type: TextFieldType;
+  value: string;
+  errMsg: string;
+  handleInput: (event: React.FormEvent<HTMLInputElement>) => void;
 }
 
-const TextField = ({ validator, label, mode }: TextFieldProps) => {
-  const [input, setInput] = useState<string>("");
-  const [errMsg, setErrMsg] = useState<string>("");
+const TextField = ({
+  label,
+  mode,
+  type,
+  value,
+  errMsg,
+  handleInput,
+}: TextFieldProps) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
-
-  const handleInput = (event: React.FormEvent<HTMLInputElement>) => {
-    const input = event.currentTarget.value;
-    setInput(input);
-
-    try {
-      validator(input);
-      setErrMsg("");
-    } catch (error) {
-      if (error instanceof Error) setErrMsg(error.message);
-    }
-  };
 
   const handleShowPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -137,19 +181,19 @@ const TextField = ({ validator, label, mode }: TextFieldProps) => {
   };
 
   return (
-    <InputContainer className={mode}>
+    <InputContainer className={`${mode}${" "}${type}`}>
       <input
-        className={errMsg && "error"}
-        type={mode === "password" && !showPassword ? "password" : "text"}
-        value={input}
+        className={errMsg ? "error" : value && "success"}
+        type={type === "password" && !showPassword ? "password" : "text"}
+        value={value}
         onChange={handleInput}
       ></input>
-      {mode === "password" ? (
+      {type === "password" ? (
         <button className="show-password" onClick={handleShowPassword}>
           SHOW
         </button>
       ) : null}
-      <label className={input && "filled"}>{label}</label>
+      <label className={value && "filled"}>{label}</label>
       <div className="error">{errMsg}</div>
     </InputContainer>
   );

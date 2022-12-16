@@ -1,5 +1,8 @@
 import styled from "styled-components";
 
+export const SignInPageContainer = styled.div`
+  height: 100%;
+`;
 export const SignInContainer = styled.div`
   position: relative;
   background-color: rgba(0, 0, 0, 0.7);
@@ -12,7 +15,7 @@ export const SignInContainer = styled.div`
   color: white;
   max-width: 450px;
   min-height: 660px;
-  margin: 0 auto 270px;
+  margin: 0 auto 0;
   z-index: 10;
 `;
 
@@ -35,6 +38,15 @@ export const SignInForm = styled.div`
     display: flex;
     font-size: 13px;
     color: #b3b3b3;
+  }
+
+  div.error-message {
+    padding: 10px 20px;
+    color: white;
+    background-color: #e87c03;
+    font-size: 14px;
+    margin: 0 0 16px;
+    border-radius: 4px;
   }
 `;
 

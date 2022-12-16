@@ -10,15 +10,21 @@ export const BgWrapper = styled.div`
 
   &.card {
     height: calc(70vh - 2px);
+    width: 100vw;
+
+    img {
+      width: 100%;
+    }
   }
 
   &.fullscreen {
-    height: 100%;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
   }
 `;
 
 export const BgImg = styled.img`
-  width: 100%;
   height: 100%;
   object-fit: cover;
 `;

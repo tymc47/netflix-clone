@@ -179,15 +179,6 @@ export const RedButton = styled.button`
   width: 100%;
   font-size: 1.625rem;
   border: 1px solid #333;
+  cursor: pointer;
 `;
 
-export const SignIn = styled.a`
-  text-decoration: none;
-  color: white;
-  font-family: "Netflix Sans Light";
-  background-color: #e50914;
-  padding: 7px 17px;
-  border-radius: 3px;
-  margin-top: 0;
-  display: inline-block;
-`;
