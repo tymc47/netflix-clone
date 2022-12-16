@@ -1,11 +1,17 @@
-import { Movie, SliderFilter } from "./types";
+import userService from "./services/userService";
+import { Show, SliderFilter, User } from "./types";
 
 export const validateEmail = (email: string): boolean => {
   const re = /\S+@\S+\.\S+/;
   return re.test(email);
 };
 
-export const rotateMovieArray = (shift: number, array: Movie[]): Movie[] => {
+export const validatePhone = (phone: string): boolean => {
+  const re = /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/;
+  return re.test(phone);
+};
+
+export const rotateMovieArray = (shift: number, array: Show[]): Show[] => {
   const copy = [...array];
 
   for (let i = 0; i < Math.abs(shift); i++) {
@@ -57,7 +63,7 @@ export const getTwoRandomInteger = (): number[] => {
   return [number_1, number_2];
 };
 
-export const shuffleShowArray = (shows: Movie[]): Movie[] => {
+export const shuffleShowArray = (shows: Show[]): Show[] => {
   const arrayCopy = [...shows];
   let randomIndex,
     index = arrayCopy.length;
@@ -73,4 +79,19 @@ export const shuffleShowArray = (shows: Movie[]): Movie[] => {
   }
 
   return arrayCopy;
+};
+
+export const signIn = (user: User) => {
+  window.localStorage.setItem("netflix-cloneUser", JSON.stringify(user));
+  window.localStorage.setItem(
+    "netflix-cloneUser-List",
+    JSON.stringify(user.mylist)
+  );
+  userService.setToken(user.token);
+};
+
+export const signOut = () => {
+  window.localStorage.removeItem("netflix-cloneUser");
+  window.localStorage.removeItem("netflix-cloneUser-List");
+  userService.setToken("");
 };
