@@ -20,18 +20,27 @@ import {
   CardAnimation2,
   DownloadAnimation,
   CardImgContainer,
-  SignIn,
 } from "./FrontPage.styled";
-import { NavBar } from "../components/NavBar";
+import { NavBar, SignIn } from "../components/NavBar";
 import PosterBackground from "../components/PosterBackground";
 import TextField from "../components/TextField";
-import { validateEmail } from "../utils";
+import { useTextField } from "../hooks";
+import React from "react";
+import { setAccount, useStateValue } from "../state";
+import { useNavigate } from "react-router-dom";
 
-const FrontPage = () => {
-  const emailValidator = (input: string) => {
-    if (!input) throw new Error("Email is required!");
-    else if (!validateEmail(input))
-      throw new Error("Please enter a valid email address");
+const LandingPage = () => {
+  const email = useTextField("Email address", "landing", "account");
+  const [, dispatch] = useStateValue();
+  const navigate = useNavigate();
+
+  const handleSignUp = (event: React.FormEvent) => {
+    event.preventDefault();
+    if (email.value === "") return email.handleEmptySubmit();
+    if (email.errMsg !== "") return;
+
+    dispatch(setAccount(email.value));
+    navigate("/signup");
   };
 
   return (
@@ -48,16 +57,13 @@ const FrontPage = () => {
             <CardText>
               <h1>Unlimited movies, TV shows, and more.</h1>
               <h2>Watch anywhere. Cancel anytime.</h2>
-              <SignUpForm>
+              <SignUpForm onSubmit={handleSignUp}>
                 <h3>
                   Ready to watch? Enter your email to create or restart your
                   membership.
                 </h3>
                 <FormInput>
-                  <TextField
-                    label={"Email address"}
-                    validator={emailValidator}
-                  />
+                  <TextField {...email} />
                   <div>
                     <RedButton>Get Started &gt;</RedButton>
                   </div>
@@ -149,7 +155,7 @@ const FrontPage = () => {
                 membership.
               </h3>
               <FormInput>
-                <TextField label={"Email address"} validator={emailValidator} />
+                <TextField {...email} />
                 <div>
                   <RedButton>Get Started &gt;</RedButton>
                 </div>
@@ -162,4 +168,4 @@ const FrontPage = () => {
   );
 };
 
-export default FrontPage;
+export default LandingPage;

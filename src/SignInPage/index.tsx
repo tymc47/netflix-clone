@@ -1,52 +1,68 @@
 import { NavBar } from "../components/NavBar";
 import { RedButton } from "../LandingPage/FrontPage.styled";
-import { useState } from "react";
+import React, { useState } from "react";
 import PosterBackground from "../components/PosterBackground";
 import {
   SignInContainer,
   SignInForm,
   RememberMe,
   FormOther,
+  SignInPageContainer,
 } from "./SignInPage.styled";
 import TextField from "../components/TextField";
-import { validateEmail } from "../utils";
+import { useTextField } from "../hooks";
+import loginService from "../services/loginService";
+import { setUser, useStateValue } from "../state";
+import { signIn } from "../utils";
 
 const SignInPage = () => {
   const [showDisclaimer, setShowDisclaimer] = useState<boolean>(false);
+  const [, dispatch] = useStateValue();
+  const [errMsg, setErrMsg] = useState<string>("");
+  const username = useTextField("Email or phone number", "signin", "account");
+  const password = useTextField("Password", "signin", "password");
 
-  const usernameValidator = (input: string) => {
-    if (!input) throw new Error("Please enter a valid email or phone number");
-    else if (!validateEmail(input))
-      throw new Error("Please enter a valid email.");
-  };
+  const handleLogin = async (event: React.FormEvent) => {
+    event.preventDefault();
+    if (username.errMsg || password.errMsg) return;
+    if (!username.value || !password.value) {
+      username.handleEmptySubmit();
+      password.handleEmptySubmit();
+      return;
+    }
 
-  const passwordValidator = (input: string) => {
-    if (input.length < 4 || input.length > 60)
-      throw new Error(
-        "Your password must contain between 4 and 60 characters."
-      );
+    try {
+      const user = await loginService.login({
+        username: username.value,
+        password: password.value,
+      });
+      signIn(user);
+      dispatch(setUser(user));
+      setErrMsg("");
+      window.location.href = "/browse";
+    } catch (err) {
+      console.log(err);
+      setErrMsg("Wrong credentials");
+      password.value = "";
+    }
+
+    console.log(username.value, password.value);
   };
 
   return (
-    <div>
+    <SignInPageContainer>
       <PosterBackground mode={"fullscreen"} />
       <NavBar />
       <SignInContainer>
         <SignInForm>
           <h1>Sign In</h1>
-          <form>
-            <TextField
-              label={"Email or phone number"}
-              validator={usernameValidator}
-              mode={"signin"}
-            />
-            <TextField
-              label={"Password"}
-              validator={passwordValidator}
-              mode={"password"}
-            />
 
-            <RedButton>Sign In</RedButton>
+          {errMsg !== "" ? <div className="error-message">{errMsg}</div> : null}
+          <form>
+            <TextField {...username} />
+            <TextField {...password} />
+
+            <RedButton onClick={handleLogin}>Sign In</RedButton>
             <div className="login-help">
               <RememberMe>
                 <input type="checkbox" id="remember-me"></input>
@@ -93,7 +109,7 @@ const SignInPage = () => {
           </div>
         </FormOther>
       </SignInContainer>
-    </div>
+    </SignInPageContainer>
   );
 };
 
