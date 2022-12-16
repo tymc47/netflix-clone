@@ -8,6 +8,7 @@ import { ReactComponent as Logout_icon } from "../assets/logout.svg";
 const NavContainer = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   height: 3rem;
   padding: 30px 3.5rem 0 3.5rem;
   max-width: 100vw;
@@ -65,6 +66,24 @@ const NavContainer_Main = styled.div`
   }
 `;
 
+export const SignIn = styled.a`
+  text-decoration: none;
+  color: white;
+  font-family: "Netflix Sans Light";
+  background-color: #e50914;
+  padding: 7px 15px;
+  border-radius: 3px;
+  margin-top: 0;
+  display: inline-block;
+
+  &.signup {
+    background-color: transparent;
+    color: inherit;
+    font-size: 24px;
+    font-size: bold;
+  }
+`;
+
 interface NavBarProps {
   children?: React.ReactNode;
 }
@@ -85,7 +104,12 @@ export const NavBar = ({ children }: NavBarProps) => {
   );
 };
 
-export const NavBar_Main = ({ scrolled }: { scrolled: boolean }) => {
+interface NavBar_MainProps {
+  scrolled: boolean;
+  handleLogout: () => void;
+}
+
+export const NavBar_Main = ({ scrolled, handleLogout }: NavBar_MainProps) => {
   return (
     <NavContainer_Main className={scrolled ? "dark" : ""}>
       <a href="/">
@@ -100,7 +124,11 @@ export const NavBar_Main = ({ scrolled }: { scrolled: boolean }) => {
       <div>
         <Search_icon {...iconStyles} />
         <Notification_icon {...iconStyles} />
-        <Logout_icon {...iconStyles} />
+        <Logout_icon
+          {...iconStyles}
+          style={{ cursor: "pointer" }}
+          onClick={handleLogout}
+        />
       </div>
     </NavContainer_Main>
   );
