@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { getShowsByFilter } from "../services/TMDB";
-import { Movie, SliderFilter, Tab } from "../types";
+import tmdbService from "../services/tmdbService";
+import { Show, SliderFilter, Tab } from "../types";
 import SliderCard from "./SliderCard";
 import { ReactComponent as Left_icon } from "../assets/left.svg";
 import { ReactComponent as Right_icon } from "../assets/right.svg";
@@ -11,9 +11,6 @@ import { shuffleShowArray } from "../utils";
 const RowContainer = styled.div`
   position: relative;
   width: 100vw;
-  box-sizing: border-box;
-  z-index: 8;
-  overflow: hidden;
   padding-bottom: 1rem;
 
   div.row-header {
@@ -32,7 +29,9 @@ const Slider = styled.div`
   white-space: nowrap;
 
   &:hover div.slider-control {
-    opacity: 1;
+    svg {
+      opacity: 1;
+    }
   }
 
   div.slider-control {
@@ -43,9 +42,9 @@ const Slider = styled.div`
     align-items: center;
     justify-content: center;
     background: hsla(0, 0%, 8%, 0.5);
-    z-index: 20;
-    border-radius: 4px;
-    opacity: 0;
+    border-radius: 4px 0 4px 0;
+    opacity: 1;
+
     cursor: pointer;
 
     &:hover svg {
@@ -55,6 +54,7 @@ const Slider = styled.div`
     svg {
       fill: white;
       transform: scale(1.5);
+      opacity: 0;
     }
   }
 
@@ -73,7 +73,8 @@ const SliderContent = styled.div``;
 const RowSlider = ({ filter, tab }: { filter: SliderFilter; tab: Tab }) => {
   const DISPLAY_COUNT = 7;
 
-  const [content, setContent] = useState<Movie[]>([]);
+  const [content, setContent] = useState<Show[]>([]);
+  const [showArrow, setShowArrow] = useState<boolean>(true);
   const {
     containerRef,
     displayItems,
@@ -85,7 +86,7 @@ const RowSlider = ({ filter, tab }: { filter: SliderFilter; tab: Tab }) => {
   } = useSlider(content, DISPLAY_COUNT);
 
   useEffect(() => {
-    getShowsByFilter(filter, tab).then((data) => {
+    tmdbService.getShowsByFilter(filter, tab).then((data) => {
       if (data) setContent(shuffleShowArray(data));
     });
   }, [filter, tab]);
@@ -96,24 +97,28 @@ const RowSlider = ({ filter, tab }: { filter: SliderFilter; tab: Tab }) => {
         <h2>{filter.filter}</h2>
       </div>
       <Slider>
-        {isMoved ? (
+        {isMoved && (
           <div className="slider-control left" onClick={handleLeftClick}>
-            <Left_icon />
+            {showArrow && <Left_icon />}
           </div>
-        ) : null}
+        )}
         <SliderContent ref={containerRef} {...sliderProps}>
           {displayItems.length !== 0
-            ? displayItems.map((movie: Movie) => (
+            ? displayItems.map((show: Show) => (
                 <SliderCard
-                  key={`${filter.filter}${movie.id}`}
-                  movie={movie}
+                  key={`${filter.filter}${show.id}`}
+                  show={show}
                   itemWidth={itemWidth}
+                  toggleArrow={(show: boolean) => {
+                    setShowArrow(show);
+                  }}
                 />
               ))
             : null}
         </SliderContent>
+
         <div className="slider-control right" onClick={handleRightClick}>
-          <Right_icon />
+          {showArrow && <Right_icon />}
         </div>
       </Slider>
     </RowContainer>
