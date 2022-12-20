@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { Show } from "../types";
 import { BsPlayFill as Play_icon } from "react-icons/bs";
 import { BsPlusLg as Add_icon } from "react-icons/bs";
@@ -31,7 +31,7 @@ const SliderCard = ({ show, itemWidth, toggleArrow }: SliderCardProps) => {
   });
   const containerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  const setHoverCardPosition = () => {
     if (containerRef.current) {
       const { x, right } = containerRef.current.getBoundingClientRect();
       const offsetRight = window.innerWidth - right;
@@ -39,9 +39,10 @@ const SliderCard = ({ show, itemWidth, toggleArrow }: SliderCardProps) => {
       else if (offsetRight < window.innerWidth * 0.04 + 10)
         setOffset({ right: `0px` });
     }
-  }, [containerRef.current]);
+  };
 
   const handleMouseEnter = () => {
+    setHoverCardPosition();
     setDelayHandler(
       setTimeout(() => {
         console.log("client width", window.innerWidth);
@@ -69,6 +70,7 @@ const SliderCard = ({ show, itemWidth, toggleArrow }: SliderCardProps) => {
       );
       dispatch(updateMyList(newList));
     } catch (err) {
+      alert("Unknown error occurred. Please try again later");
       console.error(err);
     }
   };
