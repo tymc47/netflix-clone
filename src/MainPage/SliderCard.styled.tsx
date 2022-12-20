@@ -1,4 +1,24 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+
+interface Offset {
+  left: number | "auto";
+  right: number | "auto";
+}
+const cardInAnimation = (offset: Offset) => keyframes`
+  0% {
+    top: 0;
+    height: 100%;
+    width: 100%;
+    left: ${offset.left};
+    right: ${offset.right};
+  }
+
+  100% {
+    top: -15%;
+    height: 120%;
+    width: 200%;
+  }
+`;
 
 export const SliderCardContainer = styled.div`
   position: relative;
@@ -15,6 +35,10 @@ export const SliderCardContainer = styled.div`
   }
 `;
 
+interface HoverCardProps {
+  initialPosition: Offset;
+}
+
 export const HoverCard = styled.div`
   position: absolute;
   box-sizing: border-box;
@@ -23,11 +47,11 @@ export const HoverCard = styled.div`
   display: flex;
   z-index: 22;
   top: -15%;
-  width: ${({ itemWidth }: { itemWidth: number }) =>
-    `${(itemWidth - 10) * 2.2}px`};
-  min-width: 200px;
-  height: ${({ itemWidth }: { itemWidth: number }) =>
-    `${(itemWidth - 10) * 1.8}px`};
+  height: 120%;
+  width: 200%;
+  animation: ${(props: HoverCardProps) =>
+      cardInAnimation(props.initialPosition)}
+    0.15s ease-in;
 
   div.hover-card-poster {
     z-index: 25;

@@ -27,7 +27,7 @@ const SliderCard = ({ show, itemWidth, toggleArrow }: SliderCardProps) => {
   > | null>(null);
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const [offset, setOffset] = useState<React.CSSProperties>({
-    left: "-50px",
+    left: "-110px",
   });
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -91,7 +91,13 @@ const SliderCard = ({ show, itemWidth, toggleArrow }: SliderCardProps) => {
       />
 
       {isHovered && (
-        <HoverCard style={offset} itemWidth={itemWidth}>
+        <HoverCard
+          style={offset}
+          initialPosition={{
+            left: offset.left ? 0 : "auto",
+            right: offset.left ? "auto" : 0,
+          }}
+        >
           <div className="hover-card-poster">
             <img
               className="hover-poster"
