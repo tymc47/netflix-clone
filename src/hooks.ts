@@ -1,16 +1,28 @@
-import { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
+import { CSSProperties } from "styled-components";
 import { TextFieldMode, TextFieldType } from "./components/TextField";
+import { SliderProps } from "./MainPage/RowSlider";
 import { useStateValue } from "./state";
 import { Show } from "./types";
 import { rotateMovieArray, validateEmail, validatePhone } from "./utils";
 
-export const useSlider = (items: Show[], displayCount: number) => {
+interface SliderHook {
+  containerRef: React.RefObject<HTMLDivElement>;
+  itemWidth: number;
+  handleLeftClick: () => void;
+  handleRightClick: () => void;
+  sliderProps: SliderProps;
+  isMoved: boolean;
+  displayItems: Show[];
+}
+
+export const useSlider = (items: Show[], displayCount: number): SliderHook => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [allItems, setAllItems] = useState<Show[]>([]);
   const [displayItems, setDisplayItems] = useState<Show[]>([]);
   const [containerWidth, setContainerWidth] = useState<number>(0);
   const [itemWidth, setItemWidth] = useState<number>(0);
-  const [animationStyle, setAnimationStyle] = useState({});
+  const [animationStyle, setAnimationStyle] = useState<CSSProperties>({});
   const [isMoved, setIsMoved] = useState<boolean>(false);
 
   const setWidth = () => {
@@ -105,19 +117,27 @@ export const useSlider = (items: Show[], displayCount: number) => {
   };
 };
 
+interface TextFieldHook {
+  label: string;
+  mode: TextFieldMode;
+  type: TextFieldType;
+  value: string;
+  errMsg: string;
+  handleInput: (event: React.FormEvent<HTMLInputElement>) => void;
+  handleEmptySubmit: () => void;
+}
+
 export const useTextField = (
   label: string,
   mode: TextFieldMode,
   type: TextFieldType
-) => {
+): TextFieldHook => {
   const [value, setValue] = useState<string>("");
   const [errMsg, setErrMsg] = useState<string>("");
   const [{ account }] = useStateValue();
 
   useEffect(() => {
-    if (mode === "signup" && type === "account") {
-      console.log("is sign Up, is account");
-      console.log(account);
+    if (type === "account" && account) {
       setValue(account);
     }
   }, []);
