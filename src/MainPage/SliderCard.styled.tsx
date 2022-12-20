@@ -22,13 +22,12 @@ export const HoverCard = styled.div`
   border-radius: 4px;
   display: flex;
   z-index: 22;
-  top: -10%;
+  top: -15%;
   width: ${({ itemWidth }: { itemWidth: number }) =>
     `${(itemWidth - 10) * 2.2}px`};
   min-width: 200px;
   height: ${({ itemWidth }: { itemWidth: number }) =>
     `${(itemWidth - 10) * 1.8}px`};
-  transition: all 0.2s ease-in-out;
 
   div.hover-card-poster {
     z-index: 25;

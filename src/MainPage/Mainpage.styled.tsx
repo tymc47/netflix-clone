@@ -5,6 +5,10 @@ export const MainPageContainer = styled.div`
   color: #fff;
 `;
 
+export const MainContentContainer = styled.div`
+  overflow: hidden;
+`;
+
 export const SliderContainer = styled.div`
   margin-top: -14vw;
 `;

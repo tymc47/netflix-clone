@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { ReactComponent as Cross_icon } from "../assets/x.svg";
+import { RxCross1 as Cross_icon } from "react-icons/rx";
 import QandA from "./questions";
 
 const FAQList = styled.ul`
@@ -56,13 +56,14 @@ const ListX = styled(Cross_icon)`
   position: absolute;
   right: 1em;
   top: 35%;
+  transition: transform 0.3s;
 
   &.close {
-    transform: scale(1.7) rotate(-45deg);
+    transform: scale(1.3) rotate(-45deg);
   }
 
   &.open {
-    transform: scale(1.7);
+    transform: scale(1.3);
   }
 `;
 

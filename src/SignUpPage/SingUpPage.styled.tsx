@@ -35,6 +35,9 @@ export const SignUpForm = styled.div`
     h4 {
       margin: 0;
     }
+    svg {
+      font-size: 1.5rem;
+    }
   }
 
   h1 {

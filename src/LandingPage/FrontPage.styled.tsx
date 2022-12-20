@@ -8,7 +8,7 @@ export const FrontPageContainer = styled.div`
 `;
 
 export const HeaderCard = styled.div`
-  max-height: 70vh;
+  height: 700px;
   box-sizing: border-box;
 `;
 
@@ -181,4 +181,3 @@ export const RedButton = styled.button`
   border: 1px solid #333;
   cursor: pointer;
 `;
-

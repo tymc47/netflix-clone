@@ -9,7 +9,7 @@ export const BgWrapper = styled.div`
   z-index: 0;
 
   &.card {
-    height: calc(70vh - 2px);
+    height: 700px;
     width: 100vw;
 
     img {

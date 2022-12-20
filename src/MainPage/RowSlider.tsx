@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import styled from "styled-components";
+import styled, { CSSProperties } from "styled-components";
 import tmdbService from "../services/tmdbService";
 import { Show, SliderFilter, Tab } from "../types";
 import SliderCard from "./SliderCard";
-import { ReactComponent as Left_icon } from "../assets/left.svg";
-import { ReactComponent as Right_icon } from "../assets/right.svg";
+import { BsChevronCompactLeft as Left_icon } from "react-icons/bs";
+import { BsChevronCompactRight as Right_icon } from "react-icons/bs";
 import { useSlider } from "../hooks";
 import { shuffleShowArray } from "../utils";
 
@@ -24,7 +24,7 @@ const RowContainer = styled.div`
 
 const Slider = styled.div`
   position: relative;
-  overflow-x: visible;
+  overflow-y: visible;
   padding: 0 4vw;
   white-space: nowrap;
 
@@ -41,6 +41,7 @@ const Slider = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 12;
     background: hsla(0, 0%, 8%, 0.5);
     border-radius: 4px 0 4px 0;
     opacity: 1;
@@ -48,12 +49,12 @@ const Slider = styled.div`
     cursor: pointer;
 
     &:hover svg {
-      transform: scale(2);
+      transform: scale(1.5);
     }
 
     svg {
       fill: white;
-      transform: scale(1.5);
+      font-size: 3rem;
       opacity: 0;
     }
   }
@@ -69,6 +70,10 @@ const Slider = styled.div`
 `;
 
 const SliderContent = styled.div``;
+
+export interface SliderProps {
+  style: CSSProperties;
+}
 
 const RowSlider = ({ filter, tab }: { filter: SliderFilter; tab: Tab }) => {
   const DISPLAY_COUNT = 7;

@@ -2,8 +2,8 @@ import styled from "styled-components";
 import { Show } from "../types";
 const imageUrl = process.env.REACT_APP_IMG_URL;
 import backgroundImage from "../assets/netflixHKbg.jpeg";
-import { ReactComponent as Play_icon } from "../assets/play.svg";
-import { ReactComponent as Info_icon } from "../assets/info.svg";
+import { BsPlayFill as Play_icon } from "react-icons/bs";
+import { AiOutlineInfoCircle as Info_icon } from "react-icons/ai";
 
 export const BillboardContainer = styled.div`
   position: relative;
@@ -91,7 +91,7 @@ const LogoAndTextContainer = styled.div`
 
     button {
       max-height: 3.5rem;
-      padding: 0rem 1.5rem 0rem 0.6rem;
+      padding: 1rem 1.5rem 1rem 1rem;
       border-radius: 4px;
       cursor: pointer;
       border: none;
@@ -101,7 +101,7 @@ const LogoAndTextContainer = styled.div`
       font-family: "Netflix Sans Light";
 
       svg {
-        transform: scale(0.8);
+        font-size: 2rem;
       }
     }
 
@@ -110,6 +110,7 @@ const LogoAndTextContainer = styled.div`
       color: white;
 
       svg {
+        margin-right: 0.5rem;
         fill: white;
       }
     }
