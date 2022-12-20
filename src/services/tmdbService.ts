@@ -61,8 +61,6 @@ const getShowForBillboard = async (
   );
 
   if (response && response.status === 200) {
-    console.log(response);
-
     const shows = response.data.results.filter(
       (data: Movie) => !!data.overview
     );
@@ -73,11 +71,6 @@ const getShowForBillboard = async (
         await axios.get(`${BASE_URL}/${type}/${show.id}/images?api_key=${API_KEY}
     `);
 
-      const video_response =
-        await axios.get(`${BASE_URL}/${type}/${show.id}/videos?api_key=${API_KEY}
-    `);
-
-      console.log(video_response.data);
       if (logo_response.status === 200)
         show.logo = logo_response.data.logos.find(
           (logo: Logo) => logo.iso_639_1 === "en"

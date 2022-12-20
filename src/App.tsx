@@ -25,7 +25,6 @@ const AppMount = styled.div`
 const RequireAuth = ({ children }: { children: ReactElement }) => {
   const [{ user }] = useStateValue();
 
-  console.log("accessing private route", user);
   if (!user) {
     return <Navigate replace to="/login" />;
   }
