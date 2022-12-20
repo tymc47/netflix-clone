@@ -93,5 +93,6 @@ export const signIn = (user: User) => {
 export const signOut = () => {
   window.localStorage.removeItem("netflix-cloneUser");
   window.localStorage.removeItem("netflix-cloneUser-List");
+  window.scrollTo(0, 0);
   userService.setToken("");
 };

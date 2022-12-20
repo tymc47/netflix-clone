@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 import { NavBar_Main } from "../components/NavBar";
 import tmdbService from "../services/tmdbService";
 import { Show, SliderFilter, Tab } from "../types";
-import { MainPageContainer, SliderContainer } from "./Mainpage.styled";
+import {
+  MainPageContainer,
+  SliderContainer,
+  MainContentContainer,
+} from "./Mainpage.styled";
 import Billboard from "./Billboard";
 import RowSlider from "./RowSlider";
 import { rearrangeSliders, signOut } from "../utils";
@@ -46,7 +50,7 @@ const MainPage = ({ tab }: MainPageProps) => {
     <MainPageContainer>
       <NavBar_Main scrolled={isScrolled} handleLogout={handleLogout} />
       {tab !== "mylist" ? (
-        <>
+        <MainContentContainer>
           <Billboard billboardMovie={billboard} />
           <SliderContainer>
             {sliders.length !== 0
@@ -55,7 +59,7 @@ const MainPage = ({ tab }: MainPageProps) => {
                 ))
               : null}
           </SliderContainer>
-        </>
+        </MainContentContainer>
       ) : (
         <MyList />
       )}
