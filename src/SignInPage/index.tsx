@@ -14,7 +14,7 @@ import { useTextField } from "../hooks";
 import loginService from "../services/loginService";
 import { setUser, useStateValue } from "../state";
 import { signIn } from "../utils";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignInPage = () => {
   const [showDisclaimer, setShowDisclaimer] = useState<boolean>(false);
@@ -22,6 +22,7 @@ const SignInPage = () => {
   const [errMsg, setErrMsg] = useState<string>("");
   const username = useTextField("Email or phone number", "signin", "account");
   const password = useTextField("Password", "signin", "password");
+  const navigate = useNavigate();
 
   const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -40,14 +41,12 @@ const SignInPage = () => {
       signIn(user);
       dispatch(setUser(user));
       setErrMsg("");
-      window.location.href = "/browse";
+      navigate("/browse");
     } catch (err) {
       console.log(err);
       setErrMsg("Wrong credentials");
       password.value = "";
     }
-
-    console.log(username.value, password.value);
   };
 
   return (

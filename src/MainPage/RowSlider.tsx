@@ -12,6 +12,7 @@ const RowContainer = styled.div`
   position: relative;
   width: 100vw;
   padding-bottom: 1rem;
+  overflow-x: hidden;
 
   div.row-header {
     margin: 0.5rem 4vw 0.5rem;
@@ -24,7 +25,6 @@ const RowContainer = styled.div`
 
 const Slider = styled.div`
   position: relative;
-  overflow-y: visible;
   padding: 0 4vw;
   white-space: nowrap;
 

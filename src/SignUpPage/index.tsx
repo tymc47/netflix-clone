@@ -14,12 +14,14 @@ import {
 import { IoWarningOutline as Warning_icon } from "react-icons/io5";
 import { setUser, useStateValue } from "../state";
 import { signIn } from "../utils";
+import { useNavigate } from "react-router-dom";
 
 const SignUpPage = () => {
   const [errMsg, setErrMsg] = useState<string>("");
   const [, dispatch] = useStateValue();
   const email = useTextField("Email", "signup", "account");
   const password = useTextField("Add a password", "signup", "password");
+  const navigate = useNavigate();
 
   const handleSignUp = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -37,7 +39,7 @@ const SignUpPage = () => {
       });
       dispatch(setUser(newUser));
       signIn(newUser);
-      window.location.href = "/browse";
+      navigate("/browse");
     } catch (err) {
       if (err instanceof AxiosError) {
         if (err.response?.data.error) {

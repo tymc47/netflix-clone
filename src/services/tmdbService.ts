@@ -109,23 +109,23 @@ const sliderOptions: SliderFilter[] = [
   },
   {
     filter: "Action & Adventure",
-    movieUrl: `${BASE_URL}/discover/movie/?api_key=${API_KEY}&language=en-US&include_adult=false&region=US&with_genres=28`,
-    tvUrl: `${BASE_URL}/discover/tv/?api_key=${API_KEY}&language=en-US&include_adult=false&region=US&with_genres=10759`,
+    movieUrl: `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=en-US&include_adult=false&region=US&with_genres=28`,
+    tvUrl: `${BASE_URL}/discover/tv?api_key=${API_KEY}&language=en-US&include_adult=false&region=US&with_genres=10759`,
   },
   {
     filter: "Sci-Fi",
-    movieUrl: `${BASE_URL}/discover/movie/?api_key=${API_KEY}&language=en-US&region=US&include_adult=false&with_genres=878`,
-    tvUrl: `${BASE_URL}/discover/tv/?api_key=${API_KEY}&language=en-US&region=US&include_adult=false&with_genres=10765`,
+    movieUrl: `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=en-US&region=US&include_adult=false&with_genres=878`,
+    tvUrl: `${BASE_URL}/discover/tv?api_key=${API_KEY}&language=en-US&region=US&include_adult=false&with_genres=10765`,
   },
   {
     filter: "Documentary",
-    movieUrl: `${BASE_URL}/discover/movie/?api_key=${API_KEY}&language=en-US&region=US&include_adult=false&with_genres=99`,
-    tvUrl: `${BASE_URL}/discover/tv/?api_key=${API_KEY}&language=en-US&region=US&include_adult=false&with_genres=99`,
+    movieUrl: `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=en-US&region=US&include_adult=false&with_genres=99`,
+    tvUrl: `${BASE_URL}/discover/tv?api_key=${API_KEY}&language=en-US&region=US&include_adult=false&with_genres=99`,
   },
   {
     filter: "Comedy",
-    movieUrl: `${BASE_URL}/discover/movie/?api_key=${API_KEY}&language=en-US&region=US&include_adult=false&with_genres=35`,
-    tvUrl: `${BASE_URL}/discover/tv/?api_key=${API_KEY}&language=en-US&region=US&include_adult=false&with_genres=35`,
+    movieUrl: `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=en-US&region=US&include_adult=false&with_genres=35`,
+    tvUrl: `${BASE_URL}/discover/tv?api_key=${API_KEY}&language=en-US&region=US&include_adult=false&with_genres=35`,
   },
 ];
 

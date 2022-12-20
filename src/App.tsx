@@ -33,7 +33,7 @@ const RequireAuth = ({ children }: { children: ReactElement }) => {
 };
 
 function App() {
-  const [, dispatch] = useStateValue();
+  const [{ user }, dispatch] = useStateValue();
   const [tab, setTab] = useState<Tab>("home");
   const navigate = useNavigate();
   const match = useMatch<"tab", string>("/browse/:tab");
@@ -82,7 +82,10 @@ function App() {
             </RequireAuth>
           }
         />
-        <Route path="/" element={<LandingPage />} />
+        <Route
+          path="/"
+          element={user ? <Navigate replace to="/browse" /> : <LandingPage />}
+        />
       </Routes>
     </AppMount>
   );
