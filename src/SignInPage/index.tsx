@@ -14,6 +14,7 @@ import { useTextField } from "../hooks";
 import loginService from "../services/loginService";
 import { setUser, useStateValue } from "../state";
 import { signIn } from "../utils";
+import { Link } from "react-router-dom";
 
 const SignInPage = () => {
   const [showDisclaimer, setShowDisclaimer] = useState<boolean>(false);
@@ -78,7 +79,7 @@ const SignInPage = () => {
         <FormOther>
           <div>
             {"New to Netflix? "}
-            <a href="/">Sign up now.</a>
+            <Link to="/">Sign up now.</Link>
           </div>
           <div className="disclaimer">
             <p>

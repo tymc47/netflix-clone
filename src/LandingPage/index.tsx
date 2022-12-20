@@ -28,19 +28,22 @@ import { useTextField } from "../hooks";
 import React from "react";
 import { setAccount, useStateValue } from "../state";
 import { useNavigate } from "react-router-dom";
+import userService from "../services/userService";
 
 const LandingPage = () => {
   const email = useTextField("Email address", "landing", "account");
   const [, dispatch] = useStateValue();
   const navigate = useNavigate();
 
-  const handleSignUp = (event: React.FormEvent) => {
+  const handleSignUp = async (event: React.FormEvent) => {
     event.preventDefault();
     if (email.value === "") return email.handleEmptySubmit();
     if (email.errMsg !== "") return;
 
+    const userExist = await userService.checkUserExist(email.value);
     dispatch(setAccount(email.value));
-    navigate("/signup");
+    if (userExist) navigate("/login");
+    else navigate("/signup");
   };
 
   return (
@@ -49,7 +52,7 @@ const LandingPage = () => {
         <HeaderCard>
           <NavBar>
             <div className="signin">
-              <SignIn href="/login">Sign In</SignIn>
+              <SignIn to="/login">Sign In</SignIn>
             </div>
           </NavBar>
           <OurStoryCard>

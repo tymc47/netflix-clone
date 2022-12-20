@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../assets/logo.png";
-import { ReactComponent as Notification_icon } from "../assets/notifications.svg";
-import { ReactComponent as Search_icon } from "../assets/search.svg";
-import { ReactComponent as Logout_icon } from "../assets/logout.svg";
+import { BsBell as Notification_icon } from "react-icons/bs";
+import { BsSearch as Search_icon } from "react-icons/bs";
+import { MdOutlineLogout as Logout_icon } from "react-icons/md";
 
 const NavContainer = styled.div`
   display: flex;
@@ -66,7 +66,7 @@ const NavContainer_Main = styled.div`
   }
 `;
 
-export const SignIn = styled.a`
+export const SignIn = styled(Link)`
   text-decoration: none;
   color: white;
   font-family: "Netflix Sans Light";
@@ -88,17 +88,23 @@ interface NavBarProps {
   children?: React.ReactNode;
 }
 
-const iconStyles = {
-  fill: "white",
-  transform: "scale(0.5)",
-};
+const NavButtonContainer = styled.div`
+  display: flex;
+  align-items: center;
+
+  svg {
+    fill: white;
+    font-size: 1.3rem;
+    margin: 0 1rem;
+  }
+`;
 
 export const NavBar = ({ children }: NavBarProps) => {
   return (
     <NavContainer>
-      <a href="/">
+      <Link to="/">
         <img className="logo" src={logo} />
-      </a>
+      </Link>
       {children}
     </NavContainer>
   );
@@ -112,24 +118,20 @@ interface NavBar_MainProps {
 export const NavBar_Main = ({ scrolled, handleLogout }: NavBar_MainProps) => {
   return (
     <NavContainer_Main className={scrolled ? "dark" : ""}>
-      <a href="/">
+      <Link to="/">
         <img className="logo" src={logo} />
-      </a>
+      </Link>
       <div className="nav-link">
         <Link to="/browse">Home</Link>
         <Link to="/browse/tvshows">TV Shows</Link>
         <Link to="/browse/movies">Movies</Link>
         <Link to="/browse/mylist">My List</Link>
       </div>
-      <div>
-        <Search_icon {...iconStyles} />
-        <Notification_icon {...iconStyles} />
-        <Logout_icon
-          {...iconStyles}
-          style={{ cursor: "pointer" }}
-          onClick={handleLogout}
-        />
-      </div>
+      <NavButtonContainer>
+        <Search_icon />
+        <Notification_icon />
+        <Logout_icon style={{ cursor: "pointer" }} onClick={handleLogout} />
+      </NavButtonContainer>
     </NavContainer_Main>
   );
 };

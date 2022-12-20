@@ -11,7 +11,7 @@ import {
   SignUpFormContainer,
   SignUpPageContainer,
 } from "./SingUpPage.styled";
-import { ReactComponent as Warning_icon } from "../assets/warning.svg";
+import { IoWarningOutline as Warning_icon } from "react-icons/io5";
 import { setUser, useStateValue } from "../state";
 import { signIn } from "../utils";
 
@@ -55,7 +55,7 @@ const SignUpPage = () => {
   return (
     <SignUpPageContainer>
       <NavBar>
-        <SignIn href="/login" className="signup">
+        <SignIn to="/login" className="signup">
           Sign In
         </SignIn>
       </NavBar>
