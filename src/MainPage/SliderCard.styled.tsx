@@ -14,8 +14,8 @@ const cardInAnimation = (offset: Offset) => keyframes`
   }
 
   100% {
-    top: -15%;
-    height: 120%;
+    top: -7.5%;
+    height: 110%;
     width: 200%;
   }
 `;
@@ -46,8 +46,8 @@ export const HoverCard = styled.div`
   border-radius: 4px;
   display: flex;
   z-index: 22;
-  top: -15%;
-  height: 120%;
+  top: -7.5%;
+  height: 110%;
   width: 200%;
   animation: ${(props: HoverCardProps) =>
       cardInAnimation(props.initialPosition)}

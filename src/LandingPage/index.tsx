@@ -44,6 +44,7 @@ const LandingPage = () => {
     dispatch(setAccount(email.value));
     if (userExist) navigate("/login");
     else navigate("/signup");
+    window.scrollTo(0, 0);
   };
 
   return (
@@ -152,7 +153,7 @@ const LandingPage = () => {
           <CardText>
             <h1 className="title-only">Frequently Asked Questions</h1>
             <FAQ />
-            <SignUpForm>
+            <SignUpForm onSubmit={handleSignUp}>
               <h3>
                 Ready to watch? Enter your email to create or restart your
                 membership.
