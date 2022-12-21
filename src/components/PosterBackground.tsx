@@ -18,6 +18,7 @@ export const BgWrapper = styled.div`
   }
 
   &.fullscreen {
+    overflow: hidden;
     min-height: 100%;
     margin: 0;
     padding: 0;
