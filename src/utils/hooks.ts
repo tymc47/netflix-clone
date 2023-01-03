@@ -1,10 +1,10 @@
 import React, { useRef, useState, useEffect } from "react";
 import { CSSProperties } from "styled-components";
-import { TextFieldMode, TextFieldType } from "./components/TextField";
-import { SliderProps } from "./MainPage/RowSlider";
-import { useStateValue } from "./state";
-import { Show } from "./types";
-import { rotateMovieArray, validateEmail, validatePhone } from "./utils";
+import { TextFieldMode, TextFieldType } from "../components/TextField";
+import { SliderProps } from "../MainPage/RowSlider";
+import { useStateValue } from "../state";
+import { Show } from "../types";
+import { rotateMovieArray, validateEmail, validatePhone } from "./helpers";
 
 interface SliderHook {
   containerRef: React.RefObject<HTMLDivElement>;

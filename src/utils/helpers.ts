@@ -1,5 +1,5 @@
-import userService from "./services/userService";
-import { Show, SliderFilter, User } from "./types";
+import userService from "../services/userService";
+import { Show, SliderFilter, User } from "../types";
 
 export const validateEmail = (email: string): boolean => {
   const re = /\S+@\S+\.\S+/;
