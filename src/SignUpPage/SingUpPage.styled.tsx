@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import devices from "../utils/devices";
 
 export const SignUpPageContainer = styled.div`
   background-color: white;
@@ -22,8 +23,12 @@ export const SignUpForm = styled.div`
   color: #333;
   max-width: 500px;
   min-height: 660px;
-  margin: 0 auto 270px;
+  margin: 0 auto;
   z-index: 10;
+
+  @media ${devices.medium} {
+    padding: 15px 25px 20px;
+  }
 
   div.error-message {
     padding: 20px 10px;
@@ -31,6 +36,13 @@ export const SignUpForm = styled.div`
     display: flex;
     align-items: center;
     column-gap: 1rem;
+
+    @media ${devices.medium} {
+      padding: 10px 5px;
+      svg {
+        font-size: 1rem;
+      }
+    }
 
     h4 {
       margin: 0;

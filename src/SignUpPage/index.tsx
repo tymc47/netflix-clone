@@ -2,7 +2,7 @@ import { AxiosError } from "axios";
 import { useState } from "react";
 import { NavBar, SignIn } from "../components/NavBar";
 import TextField from "../components/TextField";
-import { useTextField } from "../hooks";
+import { useTextField } from "../utils/hooks";
 import { RedButton } from "../LandingPage/FrontPage.styled";
 import userService from "../services/userService";
 import {
@@ -13,7 +13,7 @@ import {
 } from "./SingUpPage.styled";
 import { IoWarningOutline as Warning_icon } from "react-icons/io5";
 import { setUser, useStateValue } from "../state";
-import { signIn } from "../utils";
+import { signIn } from "../utils/helpers";
 import { useNavigate } from "react-router-dom";
 
 const SignUpPage = () => {
@@ -56,7 +56,7 @@ const SignUpPage = () => {
   console.log(errMsg);
   return (
     <SignUpPageContainer>
-      <NavBar>
+      <NavBar className="signup-page">
         <SignIn to="/login" className="signup">
           Sign In
         </SignIn>
@@ -77,7 +77,9 @@ const SignUpPage = () => {
           <FormField>
             <TextField {...email} />
             <TextField {...password} />
-            <RedButton onClick={handleSignUp}>Sign Up</RedButton>
+            <RedButton onClick={handleSignUp} className="signup">
+              Sign Up
+            </RedButton>
           </FormField>
         </SignUpForm>
       </SignUpFormContainer>

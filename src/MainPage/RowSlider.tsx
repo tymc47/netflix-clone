@@ -5,8 +5,8 @@ import { Show, SliderFilter, Tab } from "../types";
 import SliderCard from "./SliderCard";
 import { BsChevronCompactLeft as Left_icon } from "react-icons/bs";
 import { BsChevronCompactRight as Right_icon } from "react-icons/bs";
-import { useSlider } from "../hooks";
-import { shuffleShowArray } from "../utils";
+import { useSlider } from "../utils/hooks";
+import { shuffleShowArray } from "../utils/helpers";
 
 const RowContainer = styled.div`
   position: relative;

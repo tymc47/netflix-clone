@@ -4,6 +4,7 @@ import logo from "../assets/logo.png";
 import { BsBell as Notification_icon } from "react-icons/bs";
 import { BsSearch as Search_icon } from "react-icons/bs";
 import { MdOutlineLogout as Logout_icon } from "react-icons/md";
+import devices from "../utils/devices";
 
 const NavContainer = styled.div`
   display: flex;
@@ -19,6 +20,26 @@ const NavContainer = styled.div`
 
   img.logo {
     width: 9rem;
+  }
+
+  @media ${devices.medium} {
+    height: 2rem;
+    padding: 30px 2.5rem 0 2.5rem;
+
+    img.logo {
+      width: 6rem;
+    }
+  }
+
+  &.signup-page {
+    @media ${devices.medium} {
+      height: 2rem;
+      padding: 30px 1.5rem 0 1.5rem;
+
+      img.logo {
+        width: 9rem;
+      }
+    }
   }
 `;
 
@@ -81,11 +102,16 @@ export const SignIn = styled(Link)`
     color: inherit;
     font-size: 24px;
     font-size: bold;
+
+    @media ${devices.medium} {
+      font-size: 16px;
+    }
   }
 `;
 
 interface NavBarProps {
   children?: React.ReactNode;
+  className: string;
 }
 
 const NavButtonContainer = styled.div`
@@ -99,9 +125,9 @@ const NavButtonContainer = styled.div`
   }
 `;
 
-export const NavBar = ({ children }: NavBarProps) => {
+export const NavBar = ({ children, className }: NavBarProps) => {
   return (
-    <NavContainer>
+    <NavContainer className={className}>
       <Link to="/">
         <img className="logo" src={logo} />
       </Link>

@@ -1,5 +1,6 @@
 import backgroundImage from "../assets/netflixHKbg.jpeg";
 import styled from "styled-components";
+import devices from "../utils/devices";
 
 export const BgWrapper = styled.div`
   position: absolute;
@@ -9,8 +10,16 @@ export const BgWrapper = styled.div`
   z-index: 0;
 
   &.card {
-    height: 700px;
     width: 100vw;
+    height: 692px;
+
+    @media ${devices.large} {
+      height: 542px;
+    }
+
+    @media ${devices.medium} {
+      height: 536px;
+    }
 
     img {
       width: 100%;
@@ -19,13 +28,14 @@ export const BgWrapper = styled.div`
 
   &.fullscreen {
     overflow: hidden;
-    min-height: 100%;
+    height: 100%;
     margin: 0;
     padding: 0;
   }
 `;
 
 export const BgImg = styled.img`
+  width: 100%;
   height: 100%;
   object-fit: cover;
 `;

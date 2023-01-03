@@ -10,10 +10,10 @@ import {
   SignInPageContainer,
 } from "./SignInPage.styled";
 import TextField from "../components/TextField";
-import { useTextField } from "../hooks";
+import { useTextField } from "../utils/hooks";
 import loginService from "../services/loginService";
 import { setUser, useStateValue } from "../state";
-import { signIn } from "../utils";
+import { signIn } from "../utils/helpers";
 import { Link, useNavigate } from "react-router-dom";
 
 const SignInPage = () => {
@@ -52,7 +52,7 @@ const SignInPage = () => {
   return (
     <SignInPageContainer>
       <PosterBackground mode={"fullscreen"} />
-      <NavBar />
+      <NavBar className="signin-page" />
       <SignInContainer>
         <SignInForm>
           <h1>Sign In</h1>
@@ -62,7 +62,9 @@ const SignInPage = () => {
             <TextField {...username} />
             <TextField {...password} />
 
-            <RedButton onClick={handleLogin}>Sign In</RedButton>
+            <RedButton onClick={handleLogin} className="signin">
+              Sign In
+            </RedButton>
             <div className="login-help">
               <RememberMe>
                 <input type="checkbox" id="remember-me"></input>

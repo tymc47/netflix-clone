@@ -2,6 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { RxCross1 as Cross_icon } from "react-icons/rx";
 import QandA from "./questions";
+import devices from "../utils/devices";
 
 const FAQList = styled.ul`
   margin: 2em auto;
@@ -9,6 +10,11 @@ const FAQList = styled.ul`
   color: white;
   font-family: "Netflix Sans Light";
   padding: 0;
+
+  @media ${devices.medium} {
+    margin: 1em auto;
+    max-width: 100%;
+  }
 
   li {
     list-style-type: none;
@@ -27,6 +33,10 @@ const FAQList = styled.ul`
     background: #303030;
     color: white;
     cursor: pointer;
+
+    @media ${devices.medium} {
+      font-size: 1rem;
+    }
   }
 
   div {
@@ -35,6 +45,10 @@ const FAQList = styled.ul`
     font-size: 1.7rem;
     transition: max-height 0.25s cubic-bezier(0.5, 0, 0.1, 1);
     overflow: hidden;
+
+    @media ${devices.medium} {
+      font-size: 1rem;
+    }
   }
 
   div.open {

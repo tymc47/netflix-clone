@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import React, { useState } from "react";
+import devices from "../utils/devices";
 
 const InputContainer = styled.div`
   position: relative;
@@ -18,6 +19,12 @@ const InputContainer = styled.div`
     outline: none;
     box-shadow: none;
     transition: 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+
+    @media ${devices.medium} {
+      line-height: 25px;
+      padding: 18px 10px 0 10px;
+      font-size: 15px;
+    }
   }
 
   input.signin-form {
@@ -35,6 +42,12 @@ const InputContainer = styled.div`
     font-size: 16px;
     line-height: 15px;
     left: 16px;
+
+    @media ${devices.medium} {
+      line-height: 0px;
+      font-size: 15px;
+      left: 10px;
+    }
   }
 
   &:focus-within label {
@@ -53,6 +66,11 @@ const InputContainer = styled.div`
       background-color: #333;
       color: white;
       border-radius: 4px;
+
+      @media ${devices.medium} {
+        padding: 24px 16px 4px 16px;
+        font-size: 15px;
+      }
     }
 
     div.error {
@@ -65,6 +83,12 @@ const InputContainer = styled.div`
 
     label {
       top: -5px;
+
+      @media ${devices.medium} {
+        line-height: 12px;
+        font-size: 15px;
+        left: 16px;
+      }
     }
 
     &:focus-within label {
@@ -146,6 +170,10 @@ const InputContainer = styled.div`
       color: #e87c03;
       text-align: left;
       width: 100%;
+
+      @media ${devices.medium} {
+        font-size: 0.8rem;
+      }
     }
   }
 `;

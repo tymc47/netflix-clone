@@ -1,8 +1,10 @@
 import styled from "styled-components";
+import devices from "../utils/devices";
 
 export const SignInPageContainer = styled.div`
   height: 100%;
 `;
+
 export const SignInContainer = styled.div`
   position: relative;
   background-color: rgba(0, 0, 0, 0.7);
@@ -17,11 +19,18 @@ export const SignInContainer = styled.div`
   min-height: 660px;
   margin: 0 auto 0;
   z-index: 10;
+
+  @media ${devices.medium} {
+    position: absolute;
+    background-color: rgba(0, 0, 0);
+    top: 0;
+    z-index: 1;
+    max-width: 100%;
+    min-height: 100%;
+  }
 `;
 
 export const SignInForm = styled.div`
-  flex: 1;
-
   input {
     line-height: 25px;
   }
@@ -85,6 +94,7 @@ export const RememberMe = styled.div`
 export const FormOther = styled.div`
   color: #b3b3b3;
   font-size: 16px;
+  margin-top: 2rem;
 
   a {
     text-decoration: none;

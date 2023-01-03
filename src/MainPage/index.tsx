@@ -5,7 +5,7 @@ import { Show, SliderFilter, Tab } from "../types";
 import { MainPageContainer, SliderContainer } from "./Mainpage.styled";
 import Billboard from "./Billboard";
 import RowSlider from "./RowSlider";
-import { rearrangeSliders, signOut } from "../utils";
+import { rearrangeSliders, signOut } from "../utils/helpers";
 import { useNavigate } from "react-router-dom";
 import { removeUser, useStateValue } from "../state";
 import MyList from "./MyList";

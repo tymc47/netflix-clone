@@ -15,7 +15,6 @@ import {
   FormInput,
   OurStoryCard,
   AnimationCard,
-  CardTextLeft,
   CardAnimation1,
   CardAnimation2,
   DownloadAnimation,
@@ -24,7 +23,7 @@ import {
 import { NavBar, SignIn } from "../components/NavBar";
 import PosterBackground from "../components/PosterBackground";
 import TextField from "../components/TextField";
-import { useTextField } from "../hooks";
+import { useTextField } from "../utils/hooks";
 import React from "react";
 import { setAccount, useStateValue } from "../state";
 import { useNavigate } from "react-router-dom";
@@ -51,13 +50,12 @@ const LandingPage = () => {
     <>
       <FrontPageContainer>
         <HeaderCard>
-          <NavBar>
+          <NavBar className="landing-page">
             <div className="signin">
               <SignIn to="/login">Sign In</SignIn>
             </div>
           </NavBar>
           <OurStoryCard>
-            <PosterBackground mode={"card"} />
             <CardText>
               <h1>Unlimited movies, TV shows, and more.</h1>
               <h2>Watch anywhere. Cancel anytime.</h2>
@@ -75,16 +73,17 @@ const LandingPage = () => {
               </SignUpForm>
             </CardText>
           </OurStoryCard>
+          <PosterBackground mode={"card"} />
         </HeaderCard>
         <OurStoryCard>
           <AnimationCard>
-            <CardTextLeft>
+            <CardText>
               <h1>Enjoy on your TV.</h1>
               <h2>
                 Watch on Smart TVs, Playstation, Xbox, Chromecast, Apple TV,
                 Blu-ray players, and more.
               </h2>
-            </CardTextLeft>
+            </CardText>
             <CardImgContainer>
               <img className="right" src={desktop} />
               <CardAnimation1>
@@ -96,7 +95,13 @@ const LandingPage = () => {
           </AnimationCard>
         </OurStoryCard>
         <OurStoryCard>
-          <AnimationCard>
+          <AnimationCard className="reverse">
+            <CardText>
+              <h1>Download your shows to watch offline.</h1>
+              <h2>
+                Save your favorites easily and always have something to watch.
+              </h2>
+            </CardText>
             <CardImgContainer>
               <img className="left" src={phone} />
               <DownloadAnimation>
@@ -108,23 +113,17 @@ const LandingPage = () => {
                 <div className="gif" />
               </DownloadAnimation>
             </CardImgContainer>
-            <CardTextLeft>
-              <h1>Download your shows to watch offline.</h1>
-              <h2>
-                Save your favorites easily and always have something to watch.
-              </h2>
-            </CardTextLeft>
           </AnimationCard>
         </OurStoryCard>
         <OurStoryCard>
           <AnimationCard>
-            <CardTextLeft>
+            <CardText>
               <h1>Watch everywhere.</h1>
               <h2>
                 Steam unlimited movies and TV shows on your phone, tablet,
                 laptop, and TV without paying more.
               </h2>
-            </CardTextLeft>
+            </CardText>
             <CardImgContainer>
               <img className="right" src={devicepile} />
               <CardAnimation2>
@@ -136,20 +135,20 @@ const LandingPage = () => {
           </AnimationCard>
         </OurStoryCard>
         <OurStoryCard>
-          <AnimationCard>
-            <CardImgContainer>
-              <img className="left" src={kids} />
-            </CardImgContainer>
-            <CardTextLeft>
+          <AnimationCard className="reverse">
+            <CardText>
               <h1>Create profiles for kids.</h1>
               <h2>
                 Send kids on adventures with their favorite characters in a
                 space made just for them—free with your membership.
               </h2>
-            </CardTextLeft>
+            </CardText>
+            <CardImgContainer>
+              <img className="left" src={kids} />
+            </CardImgContainer>
           </AnimationCard>
         </OurStoryCard>
-        <OurStoryCard>
+        <OurStoryCard className="faq">
           <CardText>
             <h1 className="title-only">Frequently Asked Questions</h1>
             <FAQ />
