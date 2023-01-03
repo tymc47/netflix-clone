@@ -1,7 +1,7 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import LandingPage from "./LandingPage";
 import styled from "styled-components";
-import GlobalFonts from "./fonts/fonts";
+import GlobalFonts from "./assets/fonts/fonts";
 import {
   Routes,
   Route,
