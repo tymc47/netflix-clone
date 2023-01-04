@@ -20,6 +20,7 @@ interface SliderCardProps {
   itemWidth: number;
   toggleArrow: (hide: boolean) => void;
 }
+
 const SliderCard = ({ show, itemWidth, toggleArrow }: SliderCardProps) => {
   const [{ mylist }, dispatch] = useStateValue();
   const [delayHandler, setDelayHandler] = useState<ReturnType<

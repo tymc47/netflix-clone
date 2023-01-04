@@ -76,8 +76,6 @@ export interface SliderProps {
 }
 
 const RowSlider = ({ filter, tab }: { filter: SliderFilter; tab: Tab }) => {
-  const DISPLAY_COUNT = 7;
-
   const [content, setContent] = useState<Show[]>([]);
   const [showArrow, setShowArrow] = useState<boolean>(true);
   const {
@@ -88,7 +86,7 @@ const RowSlider = ({ filter, tab }: { filter: SliderFilter; tab: Tab }) => {
     handleRightClick,
     sliderProps,
     isMoved,
-  } = useSlider(content, DISPLAY_COUNT);
+  } = useSlider(content);
 
   useEffect(() => {
     tmdbService.getShowsByFilter(filter, tab).then((data) => {
@@ -96,6 +94,7 @@ const RowSlider = ({ filter, tab }: { filter: SliderFilter; tab: Tab }) => {
     });
   }, [filter, tab]);
 
+  console.log("display items width", itemWidth);
   return (
     <RowContainer>
       <div className="row-header">

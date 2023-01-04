@@ -3,7 +3,7 @@ import { useState } from "react";
 import { NavBar, SignIn } from "../components/NavBar";
 import TextField from "../components/TextField";
 import { useTextField } from "../utils/hooks";
-import { RedButton } from "../LandingPage/FrontPage.styled";
+import { RedButton } from "../LandingPage/LandingPage.styled";
 import userService from "../services/userService";
 import {
   FormField,

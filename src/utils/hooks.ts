@@ -16,8 +16,9 @@ interface SliderHook {
   displayItems: Show[];
 }
 
-export const useSlider = (items: Show[], displayCount: number): SliderHook => {
+export const useSlider = (items: Show[]): SliderHook => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [displayCount, setDisplayCount] = useState<number>(7);
   const [allItems, setAllItems] = useState<Show[]>([]);
   const [displayItems, setDisplayItems] = useState<Show[]>([]);
   const [containerWidth, setContainerWidth] = useState<number>(0);
@@ -25,14 +26,11 @@ export const useSlider = (items: Show[], displayCount: number): SliderHook => {
   const [animationStyle, setAnimationStyle] = useState<CSSProperties>({});
   const [isMoved, setIsMoved] = useState<boolean>(false);
 
-  const setWidth = () => {
-    if (containerRef.current) {
-      const newContainerWidth = containerRef.current.clientWidth;
-      const newItemWidth = newContainerWidth / displayCount;
+  console.log(displayItems);
 
-      setContainerWidth(newContainerWidth);
-      setItemWidth(newItemWidth);
-    }
+  const setWidth = () => {
+    if (containerRef.current)
+      setContainerWidth(containerRef.current.clientWidth);
   };
 
   useEffect(() => {
@@ -40,16 +38,38 @@ export const useSlider = (items: Show[], displayCount: number): SliderHook => {
   }, [containerRef.current]);
 
   useEffect(() => {
-    window.addEventListener("resize", () => {
-      setWidth();
-    });
+    window.addEventListener("resize", setWidth);
+
+    return () => {
+      window.removeEventListener("resize", setWidth);
+    };
   }, []);
 
+  //for window resize
   useEffect(() => {
-    if (isMoved)
+    let newDisplayCount = 7;
+    if (window.innerWidth > 950) newDisplayCount = 7;
+    else if (window.innerWidth > 550) newDisplayCount = 5;
+    else newDisplayCount = 3;
+
+    const newItemWidth = containerWidth / newDisplayCount;
+    if (isMoved) {
       setAnimationStyle({
-        transform: `translateX(${-containerWidth - itemWidth}px)`,
+        transform: `translateX(${-containerWidth - newItemWidth}px)`,
       });
+      if (displayCount > newDisplayCount) {
+        const newItems = rotateMovieArray(2, allItems);
+        setDisplayItems(newItems.slice(0, newDisplayCount * 3 + 2));
+        setAllItems(newItems);
+      } else if (displayCount < newDisplayCount) {
+        const newItems = rotateMovieArray(-2, allItems);
+        setDisplayItems(newItems.slice(0, newDisplayCount * 3 + 2));
+        setAllItems(newItems);
+      }
+    }
+
+    setItemWidth(newItemWidth);
+    setDisplayCount(newDisplayCount);
   }, [containerWidth]);
 
   useEffect(() => {

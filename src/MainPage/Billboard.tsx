@@ -4,11 +4,16 @@ const imageUrl = process.env.REACT_APP_IMG_URL;
 import backgroundImage from "../assets/netflixHKbg.jpeg";
 import { BsPlayFill as Play_icon } from "react-icons/bs";
 import { AiOutlineInfoCircle as Info_icon } from "react-icons/ai";
+import devices from "../utils/devices";
 
 export const BillboardContainer = styled.div`
   position: relative;
   box-sizing: border-box;
   display: grid;
+
+  @media ${devices.medium} {
+    display: none;
+  }
 `;
 
 export const BillboardMain = styled.div`
@@ -61,13 +66,26 @@ const LogoAndTextContainer = styled.div`
   z-index: 3;
   color: white;
   position: absolute;
-  top: 7.5%;
+  top: 10vh;
   left: 4%;
   width: 32.5vw;
+  max-height: 35vh;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   row-gap: 20px;
+
+  @media ${devices.large} {
+    width: 25vw;
+    row-gap: 15px;
+    top: 15%;
+  }
+
+  @media ${devices.mediumLarge} {
+    width: 20vw;
+    row-gap: 15px;
+    top: 30%;
+  }
 
   img.logo {
     width: 100%;
@@ -79,9 +97,20 @@ const LogoAndTextContainer = styled.div`
   }
 
   div.overview {
-    width: 32.5vw;
-    font-size: 1.25vw;
+    width: 35vw;
+    max-height: 8vh;
+    font-size: max(1.75vh, 1.2vw);
+
+    @media ${devices.large} {
+      font-size: 1rem;
+    }
+
+    @media ${devices.mediumLarge} {
+      display: none;
+    }
+
     line-height: 1.2;
+    overflow: scroll;
   }
 
   div.button-control {
@@ -91,7 +120,7 @@ const LogoAndTextContainer = styled.div`
 
     button {
       max-height: 3.5rem;
-      padding: 1rem 1.5rem 1rem 1rem;
+      padding: 1rem 1rem 1rem 0.8rem;
       border-radius: 4px;
       cursor: pointer;
       border: none;
@@ -99,9 +128,29 @@ const LogoAndTextContainer = styled.div`
       align-items: center;
       font-size: 1.5rem;
       font-family: "Netflix Sans Light";
+      white-space: nowrap;
+
+      @media ${devices.large} {
+        max-height: 2.5rem;
+        padding: 0.6rem 0.8rem 0.6rem 0.8rem;
+        font-size: 1rem;
+      }
+
+      @media ${devices.mediumLarge} {
+        max-height: 2rem;
+        padding: 0.4rem 0.6rem 0.4rem 0.6rem;
+        font-size: 0.8rem;
+      }
 
       svg {
         font-size: 2rem;
+
+        @media ${devices.large} {
+          font-size: 1.4rem;
+        }
+        @media ${devices.mediumLarge} {
+          font-size: 1rem;
+        }
       }
     }
 

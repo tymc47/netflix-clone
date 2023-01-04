@@ -19,7 +19,7 @@ import {
   CardAnimation2,
   DownloadAnimation,
   CardImgContainer,
-} from "./FrontPage.styled";
+} from "./LandingPage.styled";
 import { NavBar, SignIn } from "../components/NavBar";
 import PosterBackground from "../components/PosterBackground";
 import TextField from "../components/TextField";

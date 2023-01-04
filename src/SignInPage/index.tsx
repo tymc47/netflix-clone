@@ -1,5 +1,5 @@
 import { NavBar } from "../components/NavBar";
-import { RedButton } from "../LandingPage/FrontPage.styled";
+import { RedButton } from "../LandingPage/LandingPage.styled";
 import React, { useState } from "react";
 import PosterBackground from "../components/PosterBackground";
 import {

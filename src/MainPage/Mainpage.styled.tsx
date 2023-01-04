@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import devices from "../utils/devices";
 
 export const MainPageContainer = styled.div`
   background: #141414;
@@ -11,4 +12,8 @@ export const MainContentContainer = styled.div`
 
 export const SliderContainer = styled.div`
   margin-top: -14vw;
+
+  @media ${devices.medium} {
+    margin-top: 2vh;
+  }
 `;
