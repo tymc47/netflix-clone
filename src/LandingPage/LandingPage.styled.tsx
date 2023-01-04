@@ -222,8 +222,9 @@ export const DownloadAnimation = styled.div`
 `;
 
 export const SignUpForm = styled.form`
-  margin-top: 30px;
+  margin: 30px auto 0;
   text-align: center;
+  max-width: 900px;
 
   h3 {
     margin: 0 auto;
@@ -264,11 +265,19 @@ export const RedButton = styled.button`
     font-size: 1rem;
   }
 
+  @media ${devices.medium} {
+    width: 120px;
+    height: 40px;
+    font-size: 0.8rem;
+  }
+
   &.signin {
     width: 100%;
+    font-size: 1rem;
   }
 
   &.signup {
     width: 100%;
+    font-size: 1rem;
   }
 `;
