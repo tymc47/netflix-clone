@@ -26,8 +26,6 @@ export const useSlider = (items: Show[]): SliderHook => {
   const [animationStyle, setAnimationStyle] = useState<CSSProperties>({});
   const [isMoved, setIsMoved] = useState<boolean>(false);
 
-  console.log(displayItems);
-
   const setWidth = () => {
     if (containerRef.current)
       setContainerWidth(containerRef.current.clientWidth);
@@ -76,6 +74,7 @@ export const useSlider = (items: Show[]): SliderHook => {
     setAllItems(items);
     setDisplayItems(items.slice(0, displayCount * 3 + 2));
     setAnimationStyle({ transform: `translateX(0px)` });
+    setIsMoved(false);
   }, [items]);
 
   const handleLeftClick = () => {

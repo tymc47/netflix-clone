@@ -53,7 +53,7 @@ const SignUpPage = () => {
       }
     }
   };
-  console.log(errMsg);
+
   return (
     <SignUpPageContainer>
       <NavBar className="signup-page">

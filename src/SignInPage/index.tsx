@@ -43,7 +43,6 @@ const SignInPage = () => {
       setErrMsg("");
       navigate("/browse");
     } catch (err) {
-      console.log(err);
       setErrMsg("Wrong credentials");
       password.value = "";
     }
