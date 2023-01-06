@@ -84,6 +84,28 @@ const NavContainer_Main = styled.div`
     }
   }
 
+  img.logo {
+    width: 7.5rem;
+
+    @media ${devices.mediumLarge} {
+      width: 6rem;
+    }
+
+    @media ${devices.medium} {
+      width: 5.5rem;
+    }
+  }
+
+  div.dropdown {
+    flex: 1;
+    margin-left: 24px;
+    display: none;
+
+    @media ${devices.medium} {
+      display: block;
+    }
+  }
+
   div.sidebar {
     display: none;
     margin: 0 0.5rem;
@@ -118,19 +140,6 @@ const NavContainer_Main = styled.div`
 
     a:hover {
       color: #b3b3b3;
-    }
-  }
-  img.logo {
-    width: 5.5rem;
-  }
-
-  div.dropdown {
-    flex: 1;
-    margin-left: 24px;
-    display: none;
-
-    @media ${devices.medium} {
-      display: block;
     }
   }
 `;
@@ -186,7 +195,8 @@ const SideBar = styled.div`
   box-sizing: content-box;
   overflow: hidden;
   top: 100%;
-  transition: 0.5s;
+  left: 0%;
+  transition: 0.25s;
   z-index: 6;
   background-color: rgba(0, 0, 0);
 

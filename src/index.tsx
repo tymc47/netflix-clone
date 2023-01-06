@@ -9,6 +9,8 @@ const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 
+document.body.style.background = "#141414";
+
 root.render(
   <Router>
     <StateProvider reducer={reducer}>

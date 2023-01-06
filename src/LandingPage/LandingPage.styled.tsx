@@ -263,6 +263,7 @@ export const RedButton = styled.button`
     width: 140px;
     height: 48px;
     font-size: 1rem;
+    border-radius: 4px;
   }
 
   @media ${devices.medium} {

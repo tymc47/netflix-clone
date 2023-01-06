@@ -23,7 +23,6 @@ const InputContainer = styled.div`
     @media ${devices.medium} {
       line-height: 25px;
       padding: 18px 10px 0 10px;
-      font-size: 15px;
     }
   }
 
@@ -69,7 +68,6 @@ const InputContainer = styled.div`
 
       @media ${devices.medium} {
         padding: 24px 16px 4px 16px;
-        font-size: 15px;
       }
     }
 

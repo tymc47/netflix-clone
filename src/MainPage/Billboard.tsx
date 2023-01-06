@@ -5,6 +5,7 @@ import backgroundImage from "../assets/netflixHKbg.jpeg";
 import { BsPlayFill as Play_icon } from "react-icons/bs";
 import { AiOutlineInfoCircle as Info_icon } from "react-icons/ai";
 import devices from "../utils/devices";
+import { useNavigate } from "react-router-dom";
 
 export const BillboardContainer = styled.div`
   position: relative;
@@ -66,16 +67,18 @@ const LogoAndTextContainer = styled.div`
   z-index: 3;
   color: white;
   position: absolute;
-  top: 10vh;
+  top: 5vw;
   left: 4%;
   width: 32.5vw;
-  max-height: 35vh;
+  max-height: 45vh;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   row-gap: 20px;
 
   @media ${devices.large} {
+    max-height: 35vh;
+
     width: 25vw;
     row-gap: 15px;
     top: 15%;
@@ -89,6 +92,8 @@ const LogoAndTextContainer = styled.div`
 
   img.logo {
     width: 100%;
+    max-height: 200px;
+    object-fit: contain;
   }
 
   div.empty-logo {
@@ -98,8 +103,8 @@ const LogoAndTextContainer = styled.div`
 
   div.overview {
     width: 35vw;
-    max-height: 8vh;
-    font-size: max(1.75vh, 1.2vw);
+    max-height: 5vw;
+    font-size: max(1.65vh, 1.1vw);
 
     @media ${devices.large} {
       font-size: 1rem;
@@ -167,6 +172,12 @@ const LogoAndTextContainer = styled.div`
 `;
 
 const Billboard = ({ billboardMovie }: { billboardMovie: Show | null }) => {
+  const navigate = useNavigate();
+
+  const handlePlay = () => {
+    if (billboardMovie)
+      navigate(`/watch/${billboardMovie.type}/${billboardMovie.id}`);
+  };
   return (
     <BillboardContainer>
       <BillboardMain>
@@ -190,7 +201,7 @@ const Billboard = ({ billboardMovie }: { billboardMovie: Show | null }) => {
           )}
           <div className="overview">{billboardMovie?.overview}</div>
           <div className="button-control">
-            <button>
+            <button onClick={handlePlay}>
               <Play_icon />
               Play
             </button>
