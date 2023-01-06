@@ -9,16 +9,27 @@ import {
 import { User, Show } from "../types";
 import { Action } from "./reducer";
 
-export type State = {
+export interface ShowByFilter {
+  filter: string;
+  shows: Show[];
+}
+
+export interface State {
   user: User | null;
   account: string;
   mylist: Show[];
-};
+  movieData: ShowByFilter[];
+  tvshowData: ShowByFilter[];
+  homeData: ShowByFilter[];
+}
 
 const initialState: State = {
   user: null,
   account: "",
   mylist: [],
+  movieData: [],
+  tvshowData: [],
+  homeData: [],
 };
 
 export const StateContext = createContext<[State, Dispatch<Action>]>([

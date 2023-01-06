@@ -9,8 +9,8 @@ import {
   SliderFilter,
   Tab,
   TvShow,
+  VideoAPI,
 } from "../types";
-import { getTwoRandomInteger } from "../utils/helpers";
 
 const BASE_URL = "https://api.themoviedb.org/3";
 const API_KEY = process.env.REACT_APP_TMDB_APIKEY;
@@ -129,43 +129,50 @@ const sliderOptions: SliderFilter[] = [
   },
 ];
 
-const getShowsByFilter = async (
-  filter: SliderFilter,
-  tab: Tab
-): Promise<Show[] | undefined> => {
-  let url_1 = "",
-    url_2 = "";
-
-  const [page_1, page_2] = getTwoRandomInteger();
-
-  if (tab === "movies") {
-    url_1 = `${filter.movieUrl}&page=${page_1}`;
-    url_2 = `${filter.movieUrl}&page=${page_2}`;
-  } else if (tab === "tvshows") {
-    url_1 = `${filter.tvUrl}&page=${page_1}`;
-    url_2 = `${filter.tvUrl}&page=${page_2}`;
-  } else {
-    url_1 = `${filter.tvUrl}&page=${page_1}`;
-    url_2 = `${filter.movieUrl}&page=${page_1}`;
-  }
+const getShowsLists = async (url: string): Promise<Show[] | undefined> => {
+  const url_1 = url + "&page=1";
+  const url_2 = url + "&page=2";
 
   const response_1 = await axios.get<APIResponse>(url_1);
 
   const response_2 = await axios.get<APIResponse>(url_2);
 
   const dataset1 = response_1.status === 200 ? response_1.data.results : null;
-
   const dataset2 = response_1.status === 200 ? response_2.data.results : null;
 
   if (dataset1 && dataset2) {
-    return cleanData(dataset1).concat(cleanData(dataset2));
+    const dataset = cleanData(dataset1).concat(cleanData(dataset2));
+    return dataset;
   }
 
   return;
 };
 
+const getVideo = async (type: MediaType, id: string): Promise<string> => {
+  const url = `${BASE_URL}/${type}/${id}/videos?api_key=${API_KEY}&language=en-US`;
+  const response = await axios.get<VideoAPI>(url);
+
+  const dataset = response.status === 200 ? response.data.results : null;
+
+  if (dataset) {
+    const filteredData = dataset.filter(
+      (video) => video.official && video.site === "YouTube"
+    );
+
+    if (filteredData.length !== 0) {
+      return (
+        filteredData.find((video) => video.type === "Trailer")?.key ||
+        filteredData[0].key
+      );
+    }
+  }
+
+  return "";
+};
+
 export default {
   getShowForBillboard,
-  getShowsByFilter,
+  getShowsLists,
   sliderOptions,
+  getVideo,
 };

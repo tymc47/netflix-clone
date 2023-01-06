@@ -1,5 +1,6 @@
 import userService from "../services/userService";
-import { Show, SliderFilter, User } from "../types";
+import { ShowByFilter } from "../state";
+import { Show, User } from "../types";
 
 export const validateEmail = (email: string): boolean => {
   const re = /\S+@\S+\.\S+/;
@@ -27,7 +28,10 @@ export const rotateMovieArray = (shift: number, array: Show[]): Show[] => {
   return copy;
 };
 
-export const rearrangeSliders = (array: SliderFilter[]): SliderFilter[] => {
+export const rearrangeShowByFilter = (
+  array: ShowByFilter[]
+): ShowByFilter[] => {
+  if (array.length === 0) return [];
   const arrayCopy = [...array];
   let randomIndex,
     index = arrayCopy.length;
