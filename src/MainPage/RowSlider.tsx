@@ -1,12 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styled, { CSSProperties } from "styled-components";
-import tmdbService from "../services/tmdbService";
-import { Show, SliderFilter, Tab } from "../types";
+import { Show } from "../types";
 import SliderCard from "./SliderCard";
 import { BsChevronCompactLeft as Left_icon } from "react-icons/bs";
 import { BsChevronCompactRight as Right_icon } from "react-icons/bs";
 import { useSlider } from "../utils/hooks";
-import { shuffleShowArray } from "../utils/helpers";
+import devices from "../utils/devices";
 
 const RowContainer = styled.div`
   position: relative;
@@ -16,6 +15,11 @@ const RowContainer = styled.div`
 
   div.row-header {
     margin: 0.5rem 4vw 0.5rem;
+
+    @media ${devices.medium} {
+      margin: 0.5rem 7vw 0.5rem;
+    }
+
     h2 {
       line-height: 1.3;
       margin: 0;
@@ -27,6 +31,10 @@ const Slider = styled.div`
   position: relative;
   padding: 0 4vw;
   white-space: nowrap;
+
+  @media ${devices.medium} {
+    padding: 0 7vw;
+  }
 
   &:hover div.slider-control {
     svg {
@@ -45,8 +53,11 @@ const Slider = styled.div`
     background: hsla(0, 0%, 8%, 0.5);
     border-radius: 4px 0 4px 0;
     opacity: 1;
-
     cursor: pointer;
+
+    @media ${devices.medium} {
+      width: calc(7vw - 4px);
+    }
 
     &:hover svg {
       transform: scale(1.5);
@@ -75,8 +86,7 @@ export interface SliderProps {
   style: CSSProperties;
 }
 
-const RowSlider = ({ filter, tab }: { filter: SliderFilter; tab: Tab }) => {
-  const [content, setContent] = useState<Show[]>([]);
+const RowSlider = ({ filter, shows }: { filter: string; shows: Show[] }) => {
   const [showArrow, setShowArrow] = useState<boolean>(true);
   const {
     containerRef,
@@ -86,19 +96,14 @@ const RowSlider = ({ filter, tab }: { filter: SliderFilter; tab: Tab }) => {
     handleRightClick,
     sliderProps,
     isMoved,
-  } = useSlider(content);
+  } = useSlider(shows);
 
-  useEffect(() => {
-    tmdbService.getShowsByFilter(filter, tab).then((data) => {
-      if (data) setContent(shuffleShowArray(data));
-    });
-  }, [filter, tab]);
+  if (shows.length === 0) return <></>;
 
-  console.log("display items width", itemWidth);
   return (
     <RowContainer>
       <div className="row-header">
-        <h2>{filter.filter}</h2>
+        <h2>{filter}</h2>
       </div>
       <Slider>
         {isMoved && (
@@ -110,7 +115,7 @@ const RowSlider = ({ filter, tab }: { filter: SliderFilter; tab: Tab }) => {
           {displayItems.length !== 0
             ? displayItems.map((show: Show) => (
                 <SliderCard
-                  key={`${filter.filter}${show.id}`}
+                  key={`${filter}${show.id}`}
                   show={show}
                   itemWidth={itemWidth}
                   toggleArrow={(show: boolean) => {

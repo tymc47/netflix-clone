@@ -12,6 +12,7 @@ import {
   HoverCard,
   CardButton,
 } from "./SliderCard.styled";
+import { useNavigate } from "react-router-dom";
 
 const imageUrl = process.env.REACT_APP_IMG_URL;
 
@@ -27,10 +28,12 @@ const SliderCard = ({ show, itemWidth, toggleArrow }: SliderCardProps) => {
     typeof setTimeout
   > | null>(null);
   const [isHovered, setIsHovered] = useState<boolean>(false);
+  const [hoverImg, setHoverImg] = useState<boolean>(false);
   const [offset, setOffset] = useState<React.CSSProperties>({
     left: "-110px",
   });
   const containerRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
   const setHoverCardPosition = () => {
     if (containerRef.current) {
@@ -46,8 +49,6 @@ const SliderCard = ({ show, itemWidth, toggleArrow }: SliderCardProps) => {
     setHoverCardPosition();
     setDelayHandler(
       setTimeout(() => {
-        console.log("client width", window.innerWidth);
-        console.log(containerRef.current?.getBoundingClientRect());
         setIsHovered(true);
         toggleArrow(false);
       }, 500)
@@ -56,13 +57,12 @@ const SliderCard = ({ show, itemWidth, toggleArrow }: SliderCardProps) => {
 
   const handleMouseLeave = () => {
     if (delayHandler) clearTimeout(delayHandler);
+    setHoverImg(false);
     setIsHovered(false);
     toggleArrow(true);
   };
 
   const handleToggleMyList = async () => {
-    console.log(show.id);
-
     try {
       const { newList } = await userService.toggleMyList(show);
       window.localStorage.setItem(
@@ -76,6 +76,11 @@ const SliderCard = ({ show, itemWidth, toggleArrow }: SliderCardProps) => {
     }
   };
 
+  const handlePlay = () => {
+    handleMouseLeave();
+    navigate(`/watch/${show.type}/${show.id}`);
+  };
+
   return (
     <SliderCardContainer
       itemWidth={itemWidth}
@@ -85,6 +90,7 @@ const SliderCard = ({ show, itemWidth, toggleArrow }: SliderCardProps) => {
       ref={containerRef}
     >
       <img
+        onClick={handlePlay}
         className="poster"
         key={show.id}
         src={`${imageUrl}/w500${show.poster_path}`}
@@ -93,7 +99,7 @@ const SliderCard = ({ show, itemWidth, toggleArrow }: SliderCardProps) => {
 
       {isHovered && (
         <HoverCard
-          style={offset}
+          style={hoverImg ? offset : { display: "none" }}
           initialPosition={{
             left: offset.left ? 0 : "auto",
             right: offset.left ? "auto" : 0,
@@ -105,6 +111,7 @@ const SliderCard = ({ show, itemWidth, toggleArrow }: SliderCardProps) => {
               key={show.id}
               src={`${imageUrl}/w500${show.poster_path}`}
               alt={show.type === "movie" ? show.title : show.name}
+              onLoad={() => setHoverImg(true)}
             />
           </div>
           <div className="hover-card-content">
@@ -112,8 +119,8 @@ const SliderCard = ({ show, itemWidth, toggleArrow }: SliderCardProps) => {
               <h4>{show.type === "movie" ? show.title : show.name}</h4>
             </div>
             <div className="button-grp">
-              <CardButton className="checked">
-                <span className="tooltiptext">Dummy Button</span>
+              <CardButton className="checked" onClick={handlePlay}>
+                <span className="tooltiptext">Play</span>
                 <Play_icon />
               </CardButton>
               {!mylist.some((item) => item.id === show.id) ? (

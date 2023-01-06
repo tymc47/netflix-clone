@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { NavBar_Main } from "../components/NavBar";
 import tmdbService from "../services/tmdbService";
-import { Show, SliderFilter, Tab } from "../types";
+import { Show, Tab } from "../types";
 import { MainPageContainer, SliderContainer } from "./Mainpage.styled";
 import Billboard from "./Billboard";
 import RowSlider from "./RowSlider";
-import { rearrangeSliders, signOut } from "../utils/helpers";
+import { rearrangeShowByFilter, signOut } from "../utils/helpers";
 import { useNavigate } from "react-router-dom";
-import { removeUser, useStateValue } from "../state";
+import { removeUser, ShowByFilter, useStateValue } from "../state";
 import MyList from "./MyList";
 
 interface MainPageProps {
@@ -15,9 +15,9 @@ interface MainPageProps {
 }
 
 const MainPage = ({ tab }: MainPageProps) => {
-  const [, dispatch] = useStateValue();
+  const [{ tvshowData, movieData, homeData }, dispatch] = useStateValue();
+  const [displayContent, setDisplayContent] = useState<ShowByFilter[]>([]);
   const [billboard, setBillboard] = useState<Show | null>(null);
-  const [sliders, setSliders] = useState<SliderFilter[]>([]);
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
   const navigate = useNavigate();
 
@@ -28,13 +28,15 @@ const MainPage = ({ tab }: MainPageProps) => {
   });
 
   useEffect(() => {
-    console.log("changing tab to", tab);
+    window.scrollTo(0, 0);
+
+    if (tab === "tvshows") setDisplayContent(rearrangeShowByFilter(tvshowData));
+    if (tab === "movies") setDisplayContent(rearrangeShowByFilter(movieData));
+    if (tab === "home") setDisplayContent(rearrangeShowByFilter(homeData));
+
     tmdbService
       .getShowForBillboard(tab)
       .then((data: Show | null) => setBillboard(data));
-    const shuffledOptions = rearrangeSliders(tmdbService.sliderOptions);
-    setSliders(shuffledOptions);
-    window.scrollTo(0, 0);
   }, [tab]);
 
   const handleLogout = () => {
@@ -42,6 +44,7 @@ const MainPage = ({ tab }: MainPageProps) => {
     signOut();
     navigate("/");
   };
+
   return (
     <MainPageContainer>
       <NavBar_Main scrolled={isScrolled} handleLogout={handleLogout} />
@@ -49,11 +52,14 @@ const MainPage = ({ tab }: MainPageProps) => {
         <>
           <Billboard billboardMovie={billboard} />
           <SliderContainer>
-            {sliders.length !== 0
-              ? sliders.map((slider: SliderFilter, index) => (
-                  <RowSlider key={index} filter={slider} tab={tab} />
-                ))
-              : null}
+            {displayContent.length !== 0 &&
+              displayContent.map((data, index) => (
+                <RowSlider
+                  key={index}
+                  filter={data.filter}
+                  shows={data.shows}
+                />
+              ))}
           </SliderContainer>
         </>
       ) : (

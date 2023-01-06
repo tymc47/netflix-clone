@@ -1,4 +1,5 @@
 import styled, { keyframes } from "styled-components";
+import devices from "../utils/devices";
 
 interface Offset {
   left: number | "auto";
@@ -32,6 +33,7 @@ export const SliderCardContainer = styled.div`
       `${((itemWidth - 10) / 2) * 3}px`};
     object-fit: cover;
     border-radius: 4px;
+    cursor: pointer;
   }
 `;
 
@@ -52,6 +54,11 @@ export const HoverCard = styled.div`
   animation: ${(props: HoverCardProps) =>
       cardInAnimation(props.initialPosition)}
     0.15s ease-in;
+
+  //temporary
+  @media ${devices.mediumLarge} {
+    display: none;
+  }
 
   div.hover-card-poster {
     z-index: 25;
@@ -92,6 +99,7 @@ export const CardButton = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 
   height: 30px;
   width: 30px;

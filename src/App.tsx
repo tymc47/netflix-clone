@@ -11,10 +11,12 @@ import {
 } from "react-router-dom";
 import SignInPage from "./SignInPage";
 import MainPage from "./MainPage";
-import { setUser, useStateValue } from "./state";
+import { setHomeData, setShowData, setUser, useStateValue } from "./state";
 import { isTab, Tab } from "./types";
 import SignUpPage from "./SignUpPage";
 import userService from "./services/userService";
+import WatchPage from "./WatchPage";
+import tmdbService from "./services/tmdbService";
 
 const AppMount = styled.div`
   max-width: 100vw;
@@ -55,10 +57,29 @@ function App() {
   useEffect(() => {
     if (match) {
       const tab = match.params.tab;
-      console.log("before changing tab,", tab);
       if (isTab(tab)) setTab(tab);
     }
   }, [match]);
+
+  useEffect(() => {
+    const showsFilters = tmdbService.sliderOptions;
+    for (const filter of showsFilters) {
+      if (filter.movieUrl)
+        tmdbService.getShowsLists(filter.movieUrl).then((data) => {
+          if (data) {
+            dispatch(setShowData(data, filter.filter));
+            dispatch(setHomeData(data, filter.filter));
+          }
+        });
+      if (filter.tvUrl)
+        tmdbService.getShowsLists(filter.tvUrl).then((data) => {
+          if (data) {
+            dispatch(setShowData(data, filter.filter));
+            dispatch(setHomeData(data, filter.filter));
+          }
+        });
+    }
+  }, []);
 
   return (
     <AppMount>
@@ -71,6 +92,22 @@ function App() {
           element={
             <RequireAuth>
               <MainPage tab={tab} />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/watch/movie/:id"
+          element={
+            <RequireAuth>
+              <WatchPage type={"movie"} />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/watch/tv/:id"
+          element={
+            <RequireAuth>
+              <WatchPage type={"tv"} />
             </RequireAuth>
           }
         />
