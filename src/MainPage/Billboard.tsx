@@ -116,6 +116,11 @@ const LogoAndTextContainer = styled.div`
 
     line-height: 1.2;
     overflow: scroll;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 
   div.button-control {

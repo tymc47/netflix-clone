@@ -37,7 +37,7 @@ const MainPage = ({ tab }: MainPageProps) => {
     tmdbService
       .getShowForBillboard(tab)
       .then((data: Show | null) => setBillboard(data));
-  }, [tab]);
+  }, [tab, tvshowData, movieData, homeData]);
 
   const handleLogout = () => {
     dispatch(removeUser());
